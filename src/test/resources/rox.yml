@@ -1,0 +1,5 @@
+project:
+  apiId: 24e4b61c222a 
+  version: ${project.version}
+  
+server: rox.onlotaris.com
