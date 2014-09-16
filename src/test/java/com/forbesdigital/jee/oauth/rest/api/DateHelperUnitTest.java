@@ -16,7 +16,7 @@ import static junit.framework.Assert.*;
  * @author Andrei Bucin <andrei.bucin@fortech.ro>
  */
 @RoxableTestClass(tags = {"dateHelper"})
-public class DateHelperTest {
+public class DateHelperUnitTest {
 
 	//<editor-fold defaultstate="collapsed" desc="Mocks">
 	@InjectMocks
