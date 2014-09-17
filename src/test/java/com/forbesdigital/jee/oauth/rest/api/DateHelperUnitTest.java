@@ -32,9 +32,6 @@ public class DateHelperUnitTest {
 		dateHelper = new DateHelper();
 	}
 
-	/**
-	 * Test of convertToUtcString method, of class DateHelper.
-	 */
 	@Test
 	@RoxableTest(key = "fc062b8352df", tickets = {"DCO-952"})
 	public void shouldConvertDateToUtcString() throws ParseException {
