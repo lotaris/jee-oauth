@@ -28,7 +28,7 @@ Next, we present step by step what needs to be done in order to integrate the li
 
 [2. Define OAuth entities](../define-oauth-entities.md)
 
-[3. Request OAuth tokens](/request-oauth-tokens)
+[3. Request OAuth tokens](request-oauth-tokens.md)
 
 [4. Use OAuth tokens](/use-oath-tokens)
 
