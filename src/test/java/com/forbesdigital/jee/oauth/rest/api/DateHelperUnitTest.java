@@ -2,11 +2,13 @@ package com.forbesdigital.jee.oauth.rest.api;
 
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 
 import static junit.framework.Assert.*;
 
@@ -18,18 +20,16 @@ import static junit.framework.Assert.*;
 @RoxableTestClass(tags = {"dateHelper"})
 public class DateHelperUnitTest {
 
-	//<editor-fold defaultstate="collapsed" desc="Mocks">
-	@InjectMocks
-	private DateHelper dateHelper;
+	//<editor-fold defaultstate="collapsed" desc="Constants">
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	private static final String UTC_TIMEZONE = "UTC";
 	//</editor-fold>
 
-	//<editor-fold defaultstate="collapsed" desc="Constants">
-	private static final String DATE_FORMATTING_PATTERN = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z";
-	//</editor-fold>
+	private DateHelper dateHelper;
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		dateHelper = new DateHelper();
 	}
 
 	/**
@@ -37,10 +37,17 @@ public class DateHelperUnitTest {
 	 */
 	@Test
 	@RoxableTest(key = "fc062b8352df", tickets = {"DCO-952"})
-	public void shouldConvertDateToUtcString() {
-		String date = dateHelper.convertToUtcString(new Date());
-		assertNotNull(date);
-		assertTrue("Date: " + date + " does not match formatting pattern.", date.matches(DATE_FORMATTING_PATTERN));
+	public void shouldConvertDateToUtcString() throws ParseException {
+		String initialDate = "2014-01-27T13:29:15Z";
+
+		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+		df.setTimeZone(TimeZone.getTimeZone(UTC_TIMEZONE));
+		Date date = df.parse(initialDate);
+
+		String formattedDate = dateHelper.convertToUtcString(date);
+
+		assertNotNull("The generated date should not be null.", formattedDate);
+		assertEquals("The returned formatedDate should be the same as the initialDate", initialDate, formattedDate);
 	}
 
 }
