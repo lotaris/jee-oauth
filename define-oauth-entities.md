@@ -1,5 +1,4 @@
----
-title: Define OAuth entities
+Define OAuth entities
 ---
 
 //TODO

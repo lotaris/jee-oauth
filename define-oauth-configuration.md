@@ -1,5 +1,4 @@
----
-title: Define OAuth configuration
+Define OAuth configuration
 ---
 
 //TODO

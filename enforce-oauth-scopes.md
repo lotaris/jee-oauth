@@ -1,5 +1,4 @@
----
-title: enforce-oauth-scopes
+enforce-oauth-scopes
 ---
 
 //TODO

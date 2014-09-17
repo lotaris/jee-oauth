@@ -1,5 +1,4 @@
----
-title: Use OAuth tokens
+Use OAuth tokens
 ---
 
 //TODO

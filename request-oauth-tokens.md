@@ -1,5 +1,4 @@
----
-title: Request OAuth tokens
+Request OAuth tokens
 ---
 
 //TODO
