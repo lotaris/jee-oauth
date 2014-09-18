@@ -5,8 +5,7 @@ OAuth Library Documentation
 The Digital Commerce API uses OAuth 2.0 to manage access rights. 
 This documentation presents all you need to configure/implement in order to integrate the OAuth library in your application. Throughtout the documentation we assume that the reader is familiar with OAuth 2.0 specification and terms. To learn more about OAuth 2.0, please refer to the <a href="http://tools.ietf.org/html/rfc6749" target="_blank">reference documentation</a>.
 
-Prerequisits
--------------
+### Prerequisits
 
 // TODO - here should be listed all dependencies to other libs from the OAuth lib. And also the maven dependency that needed to be added for the lib:
 
@@ -18,8 +17,7 @@ Prerequisits
 	</dependency>	 
 ```
 
-Integrate OAuth library
--------------------------
+### Integrate OAuth library
 
 Next, we present step by step what needs to be done in order to integrate the library in a new or existing application. Each step is a link to a separate page where it will be explained in details. These pages will also contain code examples to ease the integration process.
  
