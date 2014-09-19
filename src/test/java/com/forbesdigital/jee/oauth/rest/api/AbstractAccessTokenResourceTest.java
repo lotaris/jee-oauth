@@ -336,32 +336,32 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getAdditionalInformation(), new HashMap<>());
 	}
 
-}
+	/**
+	 * Implementation of AbstractAccessTokenResource used to test the functionalities of this abstract class
+	 *
+	 * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
+	 */
+	public static class AbstractAccessTokenImpl extends AbstractAccessTokenResource<IOAuthClient, IOAuthUser, IOAuthToken> {
 
-/**
- * Implementation of AbstractAccessTokenResource used to test the functionalities of this abstract class
- *
- * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
- */
-class AbstractAccessTokenImpl extends AbstractAccessTokenResource<IOAuthClient, IOAuthUser, IOAuthToken> {
+		private IOAuthClient client;
+		private IOAuthToken token;
+		private IOAuthUser user;
 
-	private IOAuthClient client;
-	private IOAuthToken token;
-	private IOAuthUser user;
+		@Override
+		protected IOAuthClient getAuthenticatedClient() {
+			return client;
+		}
 
-	@Override
-	protected IOAuthClient getAuthenticatedClient() {
-		return client;
-	}
+		@Override
+		protected IOAuthToken createOAuthToken(IOAuthClient client, Integer tokenLifetime, Set<String> grantedScopes, IOAuthUser user) {
+			return token;
+		}
 
-	@Override
-	protected IOAuthToken createOAuthToken(IOAuthClient client, Integer tokenLifetime, Set<String> grantedScopes, IOAuthUser user) {
-		return token;
-	}
+		@Override
+		protected IOAuthUser getOAuthUser(String username) {
+			return user;
+		}
 
-	@Override
-	protected IOAuthUser getOAuthUser(String username) {
-		return user;
 	}
 
 }
