@@ -1,5 +1,8 @@
 package com.forbesdigital.jee.oauth.rest.api;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import com.forbesdigital.jee.oauth.OAuthTokenError;
 import com.forbesdigital.jee.oauth.OAuthTokenResponse;
 import com.forbesdigital.jee.oauth.configuration.ConfigurationUtils;
@@ -14,18 +17,16 @@ import com.lotaris.rox.annotations.RoxableTestClass;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import javax.ws.rs.core.Response;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 /**
+ * Test suite for AbstractAccessTokenResource class.
  *
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
@@ -52,8 +53,6 @@ public class AbstractAccessTokenResourceTest {
 
 	private static final String DATE = "2015-08-23T08:11:22Z";
 
-	Map<String, Object> map = new HashMap<>();
-
 	//</editor-fold>
 	//<editor-fold defaultstate="collapsed" desc="Mocks">
 	@Mock
@@ -64,14 +63,13 @@ public class AbstractAccessTokenResourceTest {
 	private IOAuthToken token;
 	@Mock
 	private IOAuthClientRole role;
-
 	@Mock
 	private IOAuthConfiguration configuration;
 
 	@InjectMocks
 	private AbstractAccessTokenImpl abstractAccessTokenResource;
-
 	//</editor-fold>
+
 	@Before
 	public void setUp() {
 
@@ -86,8 +84,6 @@ public class AbstractAccessTokenResourceTest {
 		all_client_scopes.add("trusted_client_scope");
 		all_client_scopes.add("advanced_client_scope");
 		all_client_scopes.add("basic_client_scope");
-
-		map.put("testKey", "test");
 
 		MockitoAnnotations.initMocks(this);
 
@@ -107,19 +103,20 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "103e1c08a39a")
-	public void testSuccesfullyRequestToken() {
+	public void testSuccesfulTokenRequest() {
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
+
 		when(token.getScopes()).thenReturn(client_scopes);
 		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
 		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+		when(token.getExpirationDate()).thenReturn(expirationDate.getTime());
 		when(token.getExpiresIn()).thenReturn(Integer.parseInt(EXPIRES_IN));
-		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 
+		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenResponse response = (OAuthTokenResponse) result.getEntity();
 
 		assertEquals(response.getExpiresIn().toString(), EXPIRES_IN);
@@ -128,7 +125,6 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getTokenType(), MOCK_TOKEN_TYPE);
 		assertEquals(response.getExpirationDate(), DATE);
 		assertEquals(response.getAdditionalInformation(), new HashMap<>());
-
 	}
 
 	/**
@@ -136,29 +132,27 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "2dd70f706c89")
-	public void testUnsuccesfullyRequestToken() {
+	public void testTokenRequestWithInvaildScope() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, INVALID_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
-
 		assertEquals(response.getError(), "invalid_scope");
-
+		assertEquals(response.getErrorDescription(), "The requested scope is invalid.");
 	}
 
 	/**
-	 * Test of requestToken method that returns an error describing that the scope provided is not valid.
+	 * Test of requestToken method that returns an error describing that the scope provided is not sufficient.
 	 */
 	@Test
 	@RoxableTest(key = "9b60a586e849")
-	public void testInsufficientAccessRightsRequestToken() {
+	public void testTokenRequestWithInsufficientAccessRights() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, ADVANCED_CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
-
 		assertEquals(response.getError(), "invalid_scope");
-
+		assertEquals(response.getErrorDescription(), "The requested scope exceeds the scope granted by the resource owner.");
 	}
 
 	/**
@@ -166,14 +160,13 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "3406fbd970d8")
-	public void testInvalidGrantTypeScopesRequestToken() {
+	public void testTokenRequestWithInvalidGrantTypeScopes() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, BASIC_CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
-
 		assertEquals(response.getError(), "invalid_scope");
-
+		assertEquals(response.getErrorDescription(), "The requested scope requires a different grant_type.");
 	}
 
 	/**
@@ -181,38 +174,43 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "15ee8a817ae0")
-	public void testMalformedTokenScopesRequestToken() {
+	public void testTokenRequestWithMalformedScopes() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, MALFORMED_TOKEN, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
-
 		assertEquals(response.getError(), "invalid_scope");
-
+		assertEquals(response.getErrorDescription(), "The requested scope is malformed.");
 	}
 
 	/**
-	 * Test of requestToken method that returns an error describing that the scope provided is malformed.
+	 * Test of requestToken method that returns the default token when sending the null scope.
 	 */
 	@Test
 	@RoxableTest(key = "e98bb1ab4248")
-	public void testRequestTokenWithNoScope() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
+	public void testTokenRequestWithNoScope() {
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+		Set<String> client_scopes = new HashSet<>();
+		client_scopes.add("trusted_client_scope");
+		client_scopes.add("basic_client_scope");
+
+		when(token.getScopes()).thenReturn(client_scopes);
+		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
+		when(token.getExpirationDate()).thenReturn(expirationDate.getTime());
 		when(token.getExpiresIn()).thenReturn(Integer.parseInt(EXPIRES_IN));
+		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
 
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, null, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenResponse response = (OAuthTokenResponse) result.getEntity();
 
-		assertEquals(response.getAccessToken(), null);
-		assertEquals(response.getScope(), "");
+		assertEquals(response.getAccessToken(), MOCK_ACCESS_TOKEN);
+		assertEquals(response.getScope(), BASIC_CLIENT_SCOPE + " " + CLIENT_SCOPE);
 		assertEquals(response.getAdditionalInformation(), new HashMap<>());
-		assertEquals(response.getTokenType(), null);
+		assertEquals(response.getTokenType(), MOCK_TOKEN_TYPE);
 		assertEquals(response.getExpiresIn().toString(), EXPIRES_IN);
 		assertEquals(response.getExpirationDate(), DATE);
-
 	}
 
 	/**
@@ -221,25 +219,30 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "eccf42766784")
 	public void testDoubleSpacesScopesRequestToken() {
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
+		Set<String> client_scopes = new HashSet<>();
+		client_scopes.add("trusted_client_scope");
+		client_scopes.add("basic_client_scope");
 
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+		when(token.getScopes()).thenReturn(client_scopes);
+		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
+		when(token.getExpirationDate()).thenReturn(expirationDate.getTime());
 		when(token.getExpiresIn()).thenReturn(Integer.parseInt(EXPIRES_IN));
+		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
 
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, String.format("%s  %s", CLIENT_SCOPE, CLIENT_SCOPE), USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenResponse response = (OAuthTokenResponse) result.getEntity();
 
 		assertEquals(result.getStatus(), 200);
 
-		assertEquals(response.getAccessToken(), null);
-		assertEquals(response.getScope(), "");
+		assertEquals(response.getAccessToken(), MOCK_ACCESS_TOKEN);
+		assertEquals(response.getScope(), BASIC_CLIENT_SCOPE + " " + CLIENT_SCOPE);
 		assertEquals(response.getAdditionalInformation(), new HashMap<>());
-		assertEquals(response.getTokenType(), null);
+		assertEquals(response.getTokenType(), MOCK_TOKEN_TYPE);
 		assertEquals(response.getExpiresIn().toString(), EXPIRES_IN);
 		assertEquals(response.getExpirationDate(), DATE);
-
 	}
 
 	/**
@@ -248,24 +251,29 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "ed89053f4420")
 	public void testNullClientTokenLifetimeAndNullExpiresInRequestToken() {
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
+		Set<String> client_scopes = new HashSet<>();
+		client_scopes.add("trusted_client_scope");
+		client_scopes.add("basic_client_scope");
+
+		when(token.getScopes()).thenReturn(client_scopes);
+		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
 		when(client.getTokenLifetime()).thenReturn(null);
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+		when(token.getExpirationDate()).thenReturn(expirationDate.getTime());
+		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
 
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, null, USERNAME, PASSWORD, null);
 		OAuthTokenResponse response = (OAuthTokenResponse) result.getEntity();
 
 		assertEquals(result.getStatus(), 200);
-
-		assertEquals(response.getAccessToken(), null);
-		assertEquals(response.getScope(), "");
+		assertEquals(response.getAccessToken(), MOCK_ACCESS_TOKEN);
+		assertEquals(response.getScope(), BASIC_CLIENT_SCOPE + " " + CLIENT_SCOPE);
 		assertEquals(response.getAdditionalInformation(), new HashMap<>());
-		assertEquals(response.getTokenType(), null);
+		assertEquals(response.getTokenType(), MOCK_TOKEN_TYPE);
 		assertEquals(response.getExpiresIn().toString(), "0");
 		assertEquals(response.getExpirationDate(), DATE);
-
 	}
 
 	/**
@@ -273,17 +281,13 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "0df9a0bdd609")
-	public void testRequestTokenBadlyFormatedExpiresIn() {
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
-		when(client.getTokenLifetime()).thenReturn(null);
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+	public void testTokenRequestWithBadlyFormatedExpiresIn() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, null, USERNAME, PASSWORD, EXPIRES_IN_BADLY_FORMATED);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
 		assertEquals(response.getError(), "invalid_request");
+		assertEquals(response.getErrorDescription(), "The 'expires_in' parameter is not a valid strictly positive integer value.");
 	}
 
 	/**
@@ -291,17 +295,16 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "7bc868e26429")
-	public void testRequestTokenNegativeExpiresIn() {
+	public void testTokenRequestWithNegativeExpiresIn() {
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
-		when(client.getTokenLifetime()).thenReturn(null);
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, null, USERNAME, PASSWORD, EXPIRES_IN_NEGATIVE);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
 		assertEquals(result.getStatus(), 400);
 		assertEquals(response.getError(), "invalid_request");
+		assertEquals(response.getErrorDescription(), "The 'expires_in' parameter is not a valid strictly positive integer value.");
 	}
 
 	/**
@@ -309,16 +312,17 @@ public class AbstractAccessTokenResourceTest {
 	 */
 	@Test
 	@RoxableTest(key = "6e4bbc183c26")
-	public void testRequestTokenPasswordGrantType() {
+	public void testTokenRequestWithPasswordGrantType() {
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2015, 7, 23, 11, 11, 22);
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.set(2015, 7, 23, 11, 11, 22);
+
 		when(token.getScopes()).thenReturn(client_scopes);
 		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
 		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
-		when(token.getExpirationDate()).thenReturn(calendar.getTime());
+		when(token.getExpirationDate()).thenReturn(expirationDate.getTime());
 		when(token.getExpiresIn()).thenReturn(Integer.parseInt(EXPIRES_IN));
 
 		Response result = abstractAccessTokenResource.requestToken(PASSWORD_GRANT_TYPE, CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
@@ -334,6 +338,11 @@ public class AbstractAccessTokenResourceTest {
 
 }
 
+/**
+ * Implementation of AbstractAccessTokenResource used to test the functionalities of this abstract class
+ *
+ * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
+ */
 class AbstractAccessTokenImpl extends AbstractAccessTokenResource<IOAuthClient, IOAuthUser, IOAuthToken> {
 
 	private IOAuthClient client;
