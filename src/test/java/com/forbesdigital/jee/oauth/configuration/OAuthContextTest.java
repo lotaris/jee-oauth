@@ -25,7 +25,7 @@ public class OAuthContextTest {
 	//</editor-fold>
 
 	@Before
-	private void setUp() {
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 
@@ -37,6 +37,7 @@ public class OAuthContextTest {
 	public void testRegisterConfigurationWithSuccess() {
 		try {
 			OAuthContext.registerConfiguration(configuration);
+			OAuthContext.unregisterConfiguration();
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
 		}
@@ -53,7 +54,7 @@ public class OAuthContextTest {
 			OAuthContext.registerConfiguration(secondConfiguration);
 			fail("Exception should have been thrown.");
 		} catch (OAuthConfigurationException exception) {
-
+			OAuthContext.unregisterConfiguration();
 		}
 	}
 
@@ -66,12 +67,13 @@ public class OAuthContextTest {
 		try {
 			OAuthContext.registerConfiguration(configuration);
 			configuration = OAuthContext.getConfig();
+			OAuthContext.unregisterConfiguration();
 
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
 		}
 	}
-	
+
 	/**
 	 * Test of getConfig method, where the call fails because the configuration is null.
 	 */
@@ -82,20 +84,7 @@ public class OAuthContextTest {
 			configuration = OAuthContext.getConfig();
 			fail("Exception should have been thrown.");
 		} catch (OAuthConfigurationException exception) {
-fail("Exception should have been thrown.");
+			
 		}
 	}
-
-//	/**
-//	 * Test of getConfig method, of class OAuthContext.
-//	 */
-//	@Test
-//	public void testGetConfig() {
-//		System.out.println("getConfig");
-//		IOAuthConfiguration expResult = null;
-//		IOAuthConfiguration result = OAuthContext.getConfig();
-//		assertEquals(expResult, result);
-//		// TODO review the generated test code and remove the default call to fail.
-//		fail("The test case is a prototype.");
-//	}
 }

@@ -1,27 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.forbesdigital.jee.oauth.configuration;
 
 /**
- *
+ * This class is used to have access to the OAuthContext package private methods
+ * 
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 public class ConfigurationUtils {
-
-	private final IOAuthConfiguration configuration;
 	
-	private static ConfigurationUtils obj;
-	
-	private ConfigurationUtils(IOAuthConfiguration configuration){
-		
-		this.configuration = configuration;
+	public static void registerConfiguration(IOAuthConfiguration configuration){
 		OAuthContext.registerConfiguration(configuration);
 	}
 	
-	public static ConfigurationUtils getInstance(IOAuthConfiguration configuration) {
-		if(obj == null){
-			obj = new ConfigurationUtils(configuration);
-		}
-		
-		return obj;
+	public static void unregisterConfiguration(){
+		OAuthContext.unregisterConfiguration();
 	}
-
+	
 }
