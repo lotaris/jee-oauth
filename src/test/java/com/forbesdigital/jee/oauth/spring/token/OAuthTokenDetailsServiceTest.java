@@ -36,7 +36,7 @@ public class OAuthTokenDetailsServiceTest {
 
 	@Test
 	@RoxableTest(key = "fa2a65696d07", tickets = {"DCO-952"})
-	public void shouldLoadUserbyUsernameForAValidAccessToken() {
+	public void shouldLoadTokenForAValidAccessToken() {
 		String accessToken = "accessToken";
 		OAuthTokenDetails tokenDetails = new OAuthTokenDetails(123L, accessToken, new Date(), "clientKey", "userKey", null, "clientRole", null);
 
@@ -48,7 +48,7 @@ public class OAuthTokenDetailsServiceTest {
 
 	@Test
 	@RoxableTest(key = "188664049dc2", tickets = {"DCO-952"})
-	public void shouldNotLoadUserbyUsernameForAnInvalidAccessToken() {
+	public void shouldNotLoadTokenForAnInvalidAccessToken() {
 		String accessToken = "accessToken";
 		when(builder.buildTokenDetails(anyString())).thenReturn(null);
 
