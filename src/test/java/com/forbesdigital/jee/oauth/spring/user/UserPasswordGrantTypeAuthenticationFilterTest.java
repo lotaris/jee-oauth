@@ -1,18 +1,19 @@
 package com.forbesdigital.jee.oauth.spring.user;
 
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
+
 import com.forbesdigital.jee.oauth.spring.client.exceptions.InvalidGrantException;
 import com.forbesdigital.jee.oauth.spring.client.exceptions.InvalidRequestException;
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.anyObject;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;

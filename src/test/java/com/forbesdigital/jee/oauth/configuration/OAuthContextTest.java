@@ -37,9 +37,10 @@ public class OAuthContextTest {
 	public void testRegisterConfigurationWithSuccess() {
 		try {
 			OAuthContext.registerConfiguration(configuration);
-			OAuthContext.unregisterConfiguration();
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
+		} finally {
+			OAuthContext.unregisterConfiguration();
 		}
 	}
 
@@ -54,6 +55,7 @@ public class OAuthContextTest {
 			OAuthContext.registerConfiguration(secondConfiguration);
 			fail("Exception should have been thrown.");
 		} catch (OAuthConfigurationException exception) {
+		} finally {
 			OAuthContext.unregisterConfiguration();
 		}
 	}
@@ -67,10 +69,10 @@ public class OAuthContextTest {
 		try {
 			OAuthContext.registerConfiguration(configuration);
 			configuration = OAuthContext.getConfig();
-			OAuthContext.unregisterConfiguration();
-
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
+		} finally {
+			OAuthContext.unregisterConfiguration();
 		}
 	}
 

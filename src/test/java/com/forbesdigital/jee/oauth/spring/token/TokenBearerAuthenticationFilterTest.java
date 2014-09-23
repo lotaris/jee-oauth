@@ -1,18 +1,19 @@
 package com.forbesdigital.jee.oauth.spring.token;
 
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
+
 import com.forbesdigital.jee.oauth.spring.token.exceptions.MalformedBearerTokenException;
 import com.forbesdigital.jee.oauth.spring.token.exceptions.MissingAuthorizationHeaderException;
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.anyObject;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;

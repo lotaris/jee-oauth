@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.forbesdigital.jee.oauth.configuration;
 
 /**
- *
+ * This class is used to have access on unit tests methods on the package private methods in OAuthContext class.
+ * 
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 public class ConfigurationUtils {

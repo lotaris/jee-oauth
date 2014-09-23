@@ -17,6 +17,8 @@ public class JsonObjectSerializerTest {
 
 	/**
 	 * Test of writeValueAsString method, of class JsonObjectSerializer.
+	 *
+	 * @throws java.lang.Exception
 	 */
 	@Test
 	@RoxableTest(key = "30df459215ec")
