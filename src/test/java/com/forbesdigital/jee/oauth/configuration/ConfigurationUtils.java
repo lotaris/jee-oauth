@@ -7,12 +7,10 @@
 package com.forbesdigital.jee.oauth.configuration;
 
 /**
- * This class is used to have access to the OAuthContext package private methods
- * 
+ *
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 public class ConfigurationUtils {
-	
 	public static void registerConfiguration(IOAuthConfiguration configuration){
 		OAuthContext.registerConfiguration(configuration);
 	}
@@ -20,5 +18,4 @@ public class ConfigurationUtils {
 	public static void unregisterConfiguration(){
 		OAuthContext.unregisterConfiguration();
 	}
-	
 }

@@ -33,7 +33,7 @@ public class DateHelperUnitTest {
 	}
 
 	@Test
-	@RoxableTest(key = "fc062b8352df", tickets = {"DCO-952"})
+	@RoxableTest(key = "fb5c39b50cfc")
 	public void shouldConvertDateToUtcString() throws ParseException {
 		String initialDate = "2014-01-27T13:29:15Z";
 

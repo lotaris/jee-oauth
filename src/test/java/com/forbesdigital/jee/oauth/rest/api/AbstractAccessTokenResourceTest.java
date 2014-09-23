@@ -9,6 +9,7 @@ import com.forbesdigital.jee.oauth.configuration.ConfigurationUtils;
 import com.forbesdigital.jee.oauth.configuration.EOAuthGrantType;
 import com.forbesdigital.jee.oauth.configuration.IOAuthClientRole;
 import com.forbesdigital.jee.oauth.configuration.IOAuthConfiguration;
+import com.forbesdigital.jee.oauth.configuration.OAuthContext;
 import com.forbesdigital.jee.oauth.model.IOAuthClient;
 import com.forbesdigital.jee.oauth.model.IOAuthToken;
 import com.forbesdigital.jee.oauth.model.IOAuthUser;

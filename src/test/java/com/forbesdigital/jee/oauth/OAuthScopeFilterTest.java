@@ -1,8 +1,5 @@
 package com.forbesdigital.jee.oauth;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.when;
-
 import com.forbesdigital.jee.oauth.spring.token.OAuthTokenDetails;
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
@@ -12,12 +9,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.container.ContainerRequestContext;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -29,6 +29,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class OAuthScopeFilterTest {
 
 	//<editor-fold defaultstate="collapsed" desc="Mocks">
+	@Mock
+	private SecurityContext securityContext;
 	@Mock
 	private Authentication authentication;
 	@Mock
@@ -51,7 +53,8 @@ public class OAuthScopeFilterTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+		SecurityContextHolder.setContext(securityContext);
+		when(securityContext.getAuthentication()).thenReturn(authentication);
 		String accessToken = "accessToken";
 		OAuthTokenDetails tokenDetails = new OAuthTokenDetails(123L, accessToken, new Date(), "clientKey", "userKey", null, "clientRole", null);
 
@@ -182,7 +185,7 @@ public class OAuthScopeFilterTest {
 	 * Test of filter method where AllScopes do not match.
 	 */
 	@Test
-	@RoxableTest(key = "361b0325900a")
+	@RoxableTest(key = "8000eaa53104")
 	public void testFilterWhereAllScopesDoNotMatch() {
 		Collection<GrantedAuthority> authorities = new HashSet<>();
 		Set<String> allScopes = new HashSet<>();
