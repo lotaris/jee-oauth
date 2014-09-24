@@ -1,8 +1,5 @@
 package com.forbesdigital.jee.oauth.spring;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.doThrow;
-
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import java.io.IOException;
@@ -15,6 +12,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.doThrow;
 
 /**
  * Test suite for AbstractExceptionTranslationFilter class.
@@ -48,13 +48,9 @@ public class AbstractExceptionTranslationFilterTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	/**
-	 * Test of doFilter method that throws a IOException.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "9ee9380ee729")
-	public void testDoFilterThrowsIOException() throws Exception {
+	public void doFilterThrowsIOException() throws Exception {
 		doThrow(ioException).when(chain).doFilter(request,null);
 		try{
 			abstractExceptionTranslationFilterImpl.doFilter(request, null, chain);
@@ -64,13 +60,9 @@ public class AbstractExceptionTranslationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method that throws a RuntimeException.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "214b09a41fb5")
-	public void testDoFilterThrowsRuntimeException() throws Exception {
+	public void doFilterThrowsRuntimeException() throws Exception {
 		doThrow(runtimeException).when(chain).doFilter(request,null);
 		try{
 			abstractExceptionTranslationFilterImpl.doFilter(request, null, chain);
@@ -80,13 +72,9 @@ public class AbstractExceptionTranslationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method that throws a ServletException.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "abafbd5925ff")
-	public void testDoFilterThrowsServletException() throws Exception {
+	public void doFilterThrowsServletException() throws Exception {
 		doThrow(servletException).when(chain).doFilter(request,null);
 		try{
 			abstractExceptionTranslationFilterImpl.doFilter(request, null, chain);

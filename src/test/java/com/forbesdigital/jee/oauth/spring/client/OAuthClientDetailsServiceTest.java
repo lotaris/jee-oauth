@@ -1,8 +1,5 @@
 package com.forbesdigital.jee.oauth.spring.client;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import org.junit.Before;
@@ -12,6 +9,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for OAuthClientDetailsService class.
@@ -34,9 +35,6 @@ public class OAuthClientDetailsServiceTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	/**
-	 * Test of loadUserByUsername method, of class OAuthClientDetailsService.
-	 */
 	@Test
 	@RoxableTest(key = "2fef6c3fe0d1")
 	public void shouldLoadClientForAValidClientId() {
@@ -49,9 +47,6 @@ public class OAuthClientDetailsServiceTest {
 		assertEquals(result, userDetails);
 	}
 
-	/**
-	 * Test of loadUserByUsername method, .
-	 */
 	@Test
 	@RoxableTest(key = "111ba0eca727")
 	public void shouldNotLoadClientForAnInvalidClientId() {

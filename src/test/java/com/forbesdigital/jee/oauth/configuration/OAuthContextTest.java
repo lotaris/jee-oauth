@@ -1,13 +1,14 @@
 package com.forbesdigital.jee.oauth.configuration;
 
-import static org.junit.Assert.*;
-
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.fail;
 
 /**
  * Test suite for OAuthContext class.
@@ -28,19 +29,22 @@ public class OAuthContextTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
+	
+	@After
+	public void tearDown() {
+		OAuthContext.unregisterConfiguration();
+	}
 
 	/**
 	 * Test of registerConfiguration method, when a configuration is registered successfully.
 	 */
 	@Test
 	@RoxableTest(key = "fb372db65591")
-	public void testRegisterConfigurationWithSuccess() {
+	public void registerConfigurationWithSuccess() {
 		try {
 			OAuthContext.registerConfiguration(configuration);
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
-		} finally {
-			OAuthContext.unregisterConfiguration();
 		}
 	}
 
@@ -49,14 +53,12 @@ public class OAuthContextTest {
 	 */
 	@Test
 	@RoxableTest(key = "ee5fda548d7d")
-	public void testRegisterConfigurationWhenConfigurationAlreadyRegistered() {
+	public void registerConfigurationWhenConfigurationAlreadyRegistered() {
 		try {
 			OAuthContext.registerConfiguration(configuration);
 			OAuthContext.registerConfiguration(secondConfiguration);
 			fail("Exception should have been thrown.");
 		} catch (OAuthConfigurationException exception) {
-		} finally {
-			OAuthContext.unregisterConfiguration();
 		}
 	}
 
@@ -65,14 +67,12 @@ public class OAuthContextTest {
 	 */
 	@Test
 	@RoxableTest(key = "edc459ab5b09")
-	public void testGetConfigurationWithSuccess() {
+	public void getConfigurationWithSuccess() {
 		try {
 			OAuthContext.registerConfiguration(configuration);
 			configuration = OAuthContext.getConfig();
 		} catch (OAuthConfigurationException exception) {
 			fail("No exception should have been thrown.");
-		} finally {
-			OAuthContext.unregisterConfiguration();
 		}
 	}
 
@@ -81,7 +81,7 @@ public class OAuthContextTest {
 	 */
 	@Test
 	@RoxableTest(key = "4192224f6c0f")
-	public void testGetConfigurationWhenConfigurationIsNull() {
+	public void getConfigurationWhenConfigurationIsNull() {
 		try {
 			configuration = OAuthContext.getConfig();
 			fail("Exception should have been thrown.");

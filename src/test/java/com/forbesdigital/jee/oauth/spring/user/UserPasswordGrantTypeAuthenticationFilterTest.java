@@ -1,9 +1,5 @@
 package com.forbesdigital.jee.oauth.spring.user;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.when;
-
 import com.forbesdigital.jee.oauth.spring.client.exceptions.InvalidGrantException;
 import com.forbesdigital.jee.oauth.spring.client.exceptions.InvalidRequestException;
 import com.lotaris.rox.annotations.RoxableTest;
@@ -20,6 +16,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for UserPasswordGrantTypeAuthenticationFilter class.
@@ -62,14 +62,9 @@ public class UserPasswordGrantTypeAuthenticationFilterTest {
 		when(authenticationManager.authenticate((Authentication) anyObject())).thenReturn(authentication);
 	}
 
-	/**
-	 * Test of doFilter method, of class UserPasswordGrantTypeAuthenticationFilter.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "06f714e426f5")
-	public void testDoFilterWithGrantTypePassword() throws Exception {
+	public void doFilterWithGrantTypePassword() throws Exception {
 		when(authentication.isAuthenticated()).thenReturn(true);
 		when(request.getParameter(GRANT_TYPE)).thenReturn(PASSWORD);
 		when(request.getParameter(USERNAME)).thenReturn(USERNAME_PARAMETER);
@@ -85,14 +80,9 @@ public class UserPasswordGrantTypeAuthenticationFilterTest {
 		}
 	}
 
-	/**
-	 * Test of doFilter method with grant_type client_credentials.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "fad8fd45ae2e")
-	public void testDoFilterWithGrantTypeClientCredentials() throws Exception {
+	public void doFilterWithGrantTypeClientCredentials() throws Exception {
 		when(authentication.isAuthenticated()).thenReturn(true);
 		when(request.getParameter(GRANT_TYPE)).thenReturn(CLIENT_CREDENTIALS);
 		try {
@@ -106,14 +96,9 @@ public class UserPasswordGrantTypeAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method where user is not authenticated
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "9e512360db9c")
-	public void testDoFilterWhenUserIsNotAuthenticated() throws Exception {
+	public void doFilterWhenUserIsNotAuthenticated() throws Exception {
 		when(authentication.isAuthenticated()).thenReturn(false);
 		when(request.getParameter(GRANT_TYPE)).thenReturn(CLIENT_CREDENTIALS);
 		try {
@@ -124,14 +109,9 @@ public class UserPasswordGrantTypeAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method where user has no password set
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "1c05638839a4")
-	public void testDoFilterWhereUserHasNoPasswordSet() throws Exception {
+	public void doFilterWhereUserHasNoPasswordSet() throws Exception {
 		when(authentication.isAuthenticated()).thenReturn(true);
 		when(request.getParameter(GRANT_TYPE)).thenReturn(PASSWORD);
 		when(request.getParameter(USERNAME)).thenReturn(USERNAME_PARAMETER);

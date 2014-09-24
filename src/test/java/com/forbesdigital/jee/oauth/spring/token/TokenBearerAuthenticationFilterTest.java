@@ -1,9 +1,5 @@
 package com.forbesdigital.jee.oauth.spring.token;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.when;
-
 import com.forbesdigital.jee.oauth.spring.token.exceptions.MalformedBearerTokenException;
 import com.forbesdigital.jee.oauth.spring.token.exceptions.MissingAuthorizationHeaderException;
 import com.lotaris.rox.annotations.RoxableTest;
@@ -21,6 +17,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for TokenBearerAuthenticationFilter class.
@@ -72,7 +72,7 @@ public class TokenBearerAuthenticationFilterTest {
 	 */
 	@Test
 	@RoxableTest(key = "46d93329ea24")
-	public void testDoFilterWithSuccess() throws Exception {
+	public void doFilterWithSuccess() throws Exception {
 		when(securityContext.getAuthentication()).thenReturn(anonymousAuthenticationToken);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(VALID_AUTHORIZATION_HEADER);
 		try {
@@ -92,7 +92,7 @@ public class TokenBearerAuthenticationFilterTest {
 	 */
 	@Test
 	@RoxableTest(key = "e2a111cc3400")
-	public void testDoFilterWithInvalidAuthorizationHeader() throws Exception {
+	public void doFilterWithInvalidAuthorizationHeader() throws Exception {
 		when(securityContext.getAuthentication()).thenReturn(anonymousAuthenticationToken);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(INVALID_AUTHORIZATION_HEADER);
 		try {
@@ -109,7 +109,7 @@ public class TokenBearerAuthenticationFilterTest {
 	 */
 	@Test
 	@RoxableTest(key = "2f44f1bbc97e")
-	public void testDoFilterWithMalformedAuthorizationHeader() throws Exception {
+	public void doFilterWithMalformedAuthorizationHeader() throws Exception {
 		when(securityContext.getAuthentication()).thenReturn(anonymousAuthenticationToken);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(MALFORMED_AUTHORIZATION_HEADER);
 		try {
@@ -126,7 +126,7 @@ public class TokenBearerAuthenticationFilterTest {
 	 */
 	@Test
 	@RoxableTest(key = "f84bb1f612ac")
-	public void testDoFilterWithUnsuccessfulAuthentication() throws Exception {
+	public void doFilterWithUnsuccessfulAuthentication() throws Exception {
 		when(authenticationManager.authenticate((Authentication) anyObject())).thenThrow(authenticationException);
 		when(securityContext.getAuthentication()).thenReturn(anonymousAuthenticationToken);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(VALID_AUTHORIZATION_HEADER);
@@ -144,7 +144,7 @@ public class TokenBearerAuthenticationFilterTest {
 	 */
 	@Test
 	@RoxableTest(key = "8f96f3062956")
-	public void testDoFilterWhereAuthenticationIsNotRequired() throws Exception {
+	public void doFilterWhereAuthenticationIsNotRequired() throws Exception {
 		when(securityContext.getAuthentication()).thenReturn(authentication);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(SECOND_VALID_AUTHORIZATION_HEADER);
 		try {

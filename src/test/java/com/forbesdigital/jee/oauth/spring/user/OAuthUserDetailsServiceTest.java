@@ -1,8 +1,5 @@
 package com.forbesdigital.jee.oauth.spring.user;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import org.junit.Before;
@@ -12,6 +9,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for OAuthUserDetailsService class.
@@ -35,26 +37,18 @@ public class OAuthUserDetailsServiceTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	/**
-	 * Test of loadUserByUsername method, of class OAuthUserDetailsService.
-	 */
 	@Test
 	@RoxableTest(key = "90fb7f206581")
-	public void testLoadUserForAValidEmail() {
-		System.out.println("loadUserByUsername");
+	public void loadUserForAValidEmail() {
 		String email = "";
 		when(builder.buildUserDetails(email)).thenReturn(details);
 		UserDetails result = service.loadUserByUsername(email);
 		assertNotNull(result);
 	}
 
-	/**
-	 * Test of loadUserByUsername method, of class OAuthUserDetailsService.
-	 */
 	@Test
 	@RoxableTest(key = "e7efbc71a899")
-	public void testLoadUserForAInexsistentEmail() {
-		System.out.println("loadUserByUsername");
+	public void loadUserForAInexsistentEmail() {
 		String email = "";
 		when(builder.buildUserDetails(email)).thenReturn(null);
 		try {

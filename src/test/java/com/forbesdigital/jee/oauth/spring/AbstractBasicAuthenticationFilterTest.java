@@ -1,9 +1,5 @@
 package com.forbesdigital.jee.oauth.spring;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.when;
-
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
 import javax.servlet.FilterChain;
@@ -20,6 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for AbstractBasicAuthenticationFilter class.
@@ -60,11 +60,6 @@ public class AbstractBasicAuthenticationFilterTest {
 		SecurityContextHolder.setContext(securityContext);
 	}
 
-	/**
-	 * Test of doFilter method, of class AbstractBasicAuthenticationFilter.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "e109820f263c")
 	public void testDoFilterWithSuccess() throws Exception {
@@ -81,14 +76,9 @@ public class AbstractBasicAuthenticationFilterTest {
 		}
 	}
 
-	/**
-	 * Test of doFilter method with invalid token.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "d6e5224edd27")
-	public void testDoFilterWithInvalidToken() throws Exception {
+	public void doFilterWithInvalidToken() throws Exception {
 		when(request.getHeader(AUTHORIZATION)).thenReturn(INVALID_AUTHORIZATION);
 		when(authenticationManager.authenticate((Authentication) anyObject())).thenReturn(authentication);
 		try {
@@ -98,14 +88,9 @@ public class AbstractBasicAuthenticationFilterTest {
 		}
 	}
 
-	/**
-	 * Test of doFilter method with unsuccessful authentication.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "60da16f0826c")
-	public void testDoFilterWithUnsuccessfulAuthentication() throws Exception {
+	public void doFilterWithUnsuccessfulAuthentication() throws Exception {
 		when(request.getHeader(AUTHORIZATION)).thenReturn(BASIC_AUTHORIZATION);
 		when(authenticationManager.authenticate((Authentication) anyObject())).thenThrow(authenticationException);
 		try {
@@ -115,14 +100,9 @@ public class AbstractBasicAuthenticationFilterTest {
 		}
 	}
 
-	/**
-	 * Test of doFilter method with bad credentials.
-	 *
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "6182362334b6")
-	public void testDoFilterWithBadCredentials() throws Exception {
+	public void doFilterWithBadCredentials() throws Exception {
 		when(request.getHeader(AUTHORIZATION)).thenReturn(INVALID_BASIC_AUTHORIZATION);
 		when(authenticationManager.authenticate((Authentication) anyObject())).thenReturn(authentication);
 		try {

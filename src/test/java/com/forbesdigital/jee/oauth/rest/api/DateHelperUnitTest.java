@@ -10,7 +10,8 @@ import java.util.TimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  * Test suite for the DateHelper class.

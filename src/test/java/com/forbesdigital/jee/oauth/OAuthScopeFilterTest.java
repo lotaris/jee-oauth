@@ -1,8 +1,5 @@
 package com.forbesdigital.jee.oauth;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.when;
-
 import com.forbesdigital.jee.oauth.spring.token.OAuthTokenDetails;
 import com.lotaris.rox.annotations.RoxableTest;
 import com.lotaris.rox.annotations.RoxableTestClass;
@@ -20,6 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for OAuthScopeFilter class.
@@ -50,11 +50,12 @@ public class OAuthScopeFilterTest {
 	//</editor-fold>
 
 	private OAuthScopeFilter oAuthScopefilter;
-
+	Collection<GrantedAuthority> authorities = new HashSet<>();
 
 
 	@Before
 	public void setUp() {
+		authorities.clear();
 		MockitoAnnotations.initMocks(this);
 
 		when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -65,13 +66,9 @@ public class OAuthScopeFilterTest {
 		when(authentication.getPrincipal()).thenReturn(tokenDetails);
 	}
 
-	/**
-	 * Test of filter method where AllScopes match.
-	 */
 	@Test
 	@RoxableTest(key = "5c11a2dfee8e")
-	public void testFilterWhereAllScopesMatch() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAllScopesMatch() {
 		authorities.add(basicGrantedAuthoriry);
 		authorities.add(trustedGrantedAuthoriry);
 		authorities.add(advancedGrantedAuthoriry);
@@ -95,13 +92,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AnyScopes match.
-	 */
 	@Test
 	@RoxableTest(key = "4281c9223712")
-	public void testFilterWhereAnyScopesMatch() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAnyScopesMatch() {
 		authorities.add(basicGrantedAuthoriry);
 		authorities.add(trustedGrantedAuthoriry);
 		authorities.add(advancedGrantedAuthoriry);
@@ -127,13 +120,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AnyScopes and AllScopes are null.
-	 */
 	@Test
 	@RoxableTest(key = "097d813636af")
-	public void testFilterWhereAnyScopesAndAllScopesAreNull() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAnyScopesAndAllScopesAreNull() {
 		Set<String> allScopes = null;
 		Set<String> anyScopes = null;
 		oAuthScopefilter = new OAuthScopeFilter(allScopes, anyScopes);
@@ -146,13 +135,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AnyScopes is null and AllScopes is empty.
-	 */
 	@Test
 	@RoxableTest(key = "5614bb8ed02c")
-	public void testFilterWhereAnyScopesIsNullAndAllScopesIsEmpty() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAnyScopesIsNullAndAllScopesIsEmpty() {
 		Set<String> allScopes = new HashSet<>();
 		Set<String> anyScopes = null;
 		oAuthScopefilter = new OAuthScopeFilter(allScopes, anyScopes);
@@ -165,13 +150,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AnyScopes is empty and AllScopes is null.
-	 */
 	@Test
 	@RoxableTest(key = "ee20ba3462cf")
-	public void testFilterWhereAnyScopesIsEmptyAndAllScopesIsNull() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAnyScopesIsEmptyAndAllScopesIsNull() {
 		Set<String> allScopes = null;
 		Set<String> anyScopes = new HashSet<>();
 		oAuthScopefilter = new OAuthScopeFilter(allScopes, anyScopes);
@@ -184,13 +165,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AllScopes do not match.
-	 */
 	@Test
 	@RoxableTest(key = "8000eaa53104")
-	public void testFilterWhereAllScopesDoNotMatch() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAllScopesDoNotMatch() {
 		authorities.add(basicGrantedAuthoriry);
 		authorities.add(trustedGrantedAuthoriry);
 		authorities.add(advancedGrantedAuthoriry);
@@ -218,13 +195,9 @@ public class OAuthScopeFilterTest {
 		}
 	}
 
-	/**
-	 * Test of filter method where AnyScopes do not match.
-	 */
 	@Test
 	@RoxableTest(key = "361b0325900a")
-	public void testFilterWhereAnyScopesDoNotMatch() {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+	public void filterWhereAnyScopesDoNotMatch() {
 		authorities.add(basicGrantedAuthoriry);
 		authorities.add(trustedGrantedAuthoriry);
 		authorities.add(advancedGrantedAuthoriry);
