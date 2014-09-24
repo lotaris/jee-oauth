@@ -1,27 +1,16 @@
 package com.forbesdigital.jee.oauth.configuration;
 
 /**
- *
+ * This class is used to have access on unit tests methods on the package private methods in OAuthContext class.
+ * 
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 public class ConfigurationUtils {
-
-	private final IOAuthConfiguration configuration;
-	
-	private static ConfigurationUtils obj;
-	
-	private ConfigurationUtils(IOAuthConfiguration configuration){
-		
-		this.configuration = configuration;
+	public static void registerConfiguration(IOAuthConfiguration configuration){
 		OAuthContext.registerConfiguration(configuration);
 	}
 	
-	public static ConfigurationUtils getInstance(IOAuthConfiguration configuration) {
-		if(obj == null){
-			obj = new ConfigurationUtils(configuration);
-		}
-		
-		return obj;
+	public static void unregisterConfiguration(){
+		OAuthContext.unregisterConfiguration();
 	}
-
 }

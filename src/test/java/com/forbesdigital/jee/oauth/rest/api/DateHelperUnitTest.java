@@ -10,7 +10,8 @@ import java.util.TimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  * Test suite for the DateHelper class.
@@ -33,7 +34,7 @@ public class DateHelperUnitTest {
 	}
 
 	@Test
-	@RoxableTest(key = "fc062b8352df", tickets = {"DCO-952"})
+	@RoxableTest(key = "fb5c39b50cfc")
 	public void shouldConvertDateToUtcString() throws ParseException {
 		String initialDate = "2014-01-27T13:29:15Z";
 

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
  *
  * @author Andrei Bucin <andrei.bucin@fortech.ro>
  */
-@RoxableTestClass(tags = {"oAuthToken", "oAuthTokenDetailsService"})
+@RoxableTestClass(tags = {"oAuthToken"})
 public class OAuthTokenDetailsServiceTest {
 
 	//<editor-fold defaultstate="collapsed" desc="Mocks">
@@ -35,7 +35,7 @@ public class OAuthTokenDetailsServiceTest {
 	}
 
 	@Test
-	@RoxableTest(key = "fa2a65696d07", tickets = {"DCO-952"})
+	@RoxableTest(key = "35c431f80c48")
 	public void shouldLoadTokenForAValidAccessToken() {
 		String accessToken = "accessToken";
 		OAuthTokenDetails tokenDetails = new OAuthTokenDetails(123L, accessToken, new Date(), "clientKey", "userKey", null, "clientRole", null);
@@ -47,7 +47,7 @@ public class OAuthTokenDetailsServiceTest {
 	}
 
 	@Test
-	@RoxableTest(key = "188664049dc2", tickets = {"DCO-952"})
+	@RoxableTest(key = "503ffde031d2")
 	public void shouldNotLoadTokenForAnInvalidAccessToken() {
 		String accessToken = "accessToken";
 		when(builder.buildTokenDetails(anyString())).thenReturn(null);
