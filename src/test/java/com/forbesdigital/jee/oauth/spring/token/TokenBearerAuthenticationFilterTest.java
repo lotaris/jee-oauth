@@ -66,10 +66,6 @@ public class TokenBearerAuthenticationFilterTest {
 		
 	}
 
-	/**
-	 * Test of doFilter method, of class TokenBearerAuthenticationFilter.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "46d93329ea24")
 	public void doFilterWithSuccess() throws Exception {
@@ -86,10 +82,6 @@ public class TokenBearerAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method with invalid authorization header.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "e2a111cc3400")
 	public void doFilterWithInvalidAuthorizationHeader() throws Exception {
@@ -103,10 +95,6 @@ public class TokenBearerAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method with malformed authorization header.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "2f44f1bbc97e")
 	public void doFilterWithMalformedAuthorizationHeader() throws Exception {
@@ -120,10 +108,6 @@ public class TokenBearerAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method with unsuccessful authentication.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "f84bb1f612ac")
 	public void doFilterWithUnsuccessfulAuthentication() throws Exception {
