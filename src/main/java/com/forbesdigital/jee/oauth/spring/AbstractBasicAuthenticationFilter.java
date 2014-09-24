@@ -121,7 +121,6 @@ public abstract class AbstractBasicAuthenticationFilter extends GenericFilterBea
 		}
 
 		String token = new String(decoded, getCredentialsCharset(request));
-
 		int delim = token.indexOf(":");
 
 		if (delim == -1) {

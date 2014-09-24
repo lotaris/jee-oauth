@@ -80,6 +80,7 @@ public class OAuthScopeFilter implements ContainerRequestFilter {
 			// otherwise, check that the token has all the required scopes
 			String role = null;
 			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 			if (authentication != null) {
 				role = ((OAuthTokenDetails) authentication.getPrincipal()).getClientRole();
 				Set<String> gaStr = new TreeSet<>();
