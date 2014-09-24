@@ -27,8 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for AbstractAccessTokenResource class.
- *
+ * @see AbstractAccessTokenResource
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = "abstractAccessTokenResource")
@@ -130,9 +129,6 @@ public class AbstractAccessTokenResourceTest {
 		
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the scope provided is not valid.
-	 */
 	@Test
 	@RoxableTest(key = "2dd70f706c89")
 	public void tokenRequestWithInvaildScope() {
@@ -145,9 +141,6 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getErrorDescription(), "The requested scope is invalid.");
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the scope provided is not sufficient.
-	 */
 	@Test
 	@RoxableTest(key = "9b60a586e849")
 	public void tokenRequestWithInsufficientAccessRights() {
@@ -159,12 +152,9 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getErrorDescription(), "The requested scope exceeds the scope granted by the resource owner.");
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the provided grant-Type does not support that scope.
-	 */
 	@Test
 	@RoxableTest(key = "3406fbd970d8")
-	public void tokenRequestWithInvalidGrantTypeScopes() {
+	public void tokenRequestWithScopeNotSupertedByGrantType() {
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, BASIC_CLIENT_SCOPE, USERNAME, PASSWORD, EXPIRES_IN);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
@@ -173,9 +163,6 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getErrorDescription(), "The requested scope requires a different grant_type.");
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the scope provided is malformed.
-	 */
 	@Test
 	@RoxableTest(key = "15ee8a817ae0")
 	public void tokenRequestWithMalformedScopes() {
@@ -187,12 +174,9 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getErrorDescription(), "The requested scope is malformed.");
 	}
 
-	/**
-	 * Test of requestToken method that returns the default token when sending the null scope.
-	 */
 	@Test
 	@RoxableTest(key = "e98bb1ab4248")
-	public void tokenRequestWithNoScope() {
+	public void tokenRequestWithNullScope() {
 		Calendar expirationDate = Calendar.getInstance();
 		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
@@ -217,12 +201,9 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getExpirationDate(), DATE);
 	}
 
-	/**
-	 * Test of requestToken method where the scope provided is formed with blank spaces.
-	 */
 	@Test
 	@RoxableTest(key = "eccf42766784")
-	public void tokenRequestWithDoubleSpacesScopes() {
+	public void tokenRequestWithScopeWhichContainsDoubleSpaces() {
 		Calendar expirationDate = Calendar.getInstance();
 		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
@@ -249,9 +230,6 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getExpirationDate(), DATE);
 	}
 
-	/**
-	 * Test of requestToken method where the client token lifetime is null and expires_in parameter sent is null.
-	 */
 	@Test
 	@RoxableTest(key = "ed89053f4420")
 	public void tokenRequestWithNullClientTokenLifetimeAndNullExpiresIn() {
@@ -280,9 +258,6 @@ public class AbstractAccessTokenResourceTest {
 		assertEquals(response.getExpirationDate(), DATE);
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the expires_in parameter is badly_formated.
-	 */
 	@Test
 	@RoxableTest(key = "0df9a0bdd609")
 	public void tokenRequestWithBadlyFormatedExpiresIn() {
@@ -295,9 +270,6 @@ public class AbstractAccessTokenResourceTest {
 		ConfigurationUtils.unregisterConfiguration();
 	}
 
-	/**
-	 * Test of requestToken method that returns an error describing that the expires_in parameter is negative.
-	 */
 	@Test
 	@RoxableTest(key = "7bc868e26429")
 	public void tokenRequestWithNegativeExpiresIn() {

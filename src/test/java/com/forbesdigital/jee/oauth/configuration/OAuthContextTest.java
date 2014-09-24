@@ -11,8 +11,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.Assert.fail;
 
 /**
- * Test suite for OAuthContext class.
- *
+ * @see OAuthContext
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"oAuthContext"})
@@ -35,9 +34,6 @@ public class OAuthContextTest {
 		OAuthContext.unregisterConfiguration();
 	}
 
-	/**
-	 * Test of registerConfiguration method, when a configuration is registered successfully.
-	 */
 	@Test
 	@RoxableTest(key = "fb372db65591")
 	public void registerConfigurationWithSuccess() {
@@ -48,9 +44,6 @@ public class OAuthContextTest {
 		}
 	}
 
-	/**
-	 * Test of registerConfiguration method, when a configuration is already registered.
-	 */
 	@Test
 	@RoxableTest(key = "ee5fda548d7d")
 	public void registerConfigurationWhenConfigurationAlreadyRegistered() {
@@ -62,9 +55,6 @@ public class OAuthContextTest {
 		}
 	}
 
-	/**
-	 * Test of getConfig method, where configuration is retrieved with success.
-	 */
 	@Test
 	@RoxableTest(key = "edc459ab5b09")
 	public void getConfigurationWithSuccess() {
@@ -76,9 +66,6 @@ public class OAuthContextTest {
 		}
 	}
 
-	/**
-	 * Test of getConfig method, where the call fails because the configuration is null.
-	 */
 	@Test
 	@RoxableTest(key = "4192224f6c0f")
 	public void getConfigurationWhenConfigurationIsNull() {

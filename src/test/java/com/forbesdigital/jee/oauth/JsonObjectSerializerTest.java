@@ -10,8 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test suite for JsonObjectSerializer class.
- *
+ * @see JsonObjectSerializer
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"jsonObjectSerializer"})

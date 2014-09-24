@@ -11,12 +11,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 /**
- * Test suite for OAuthTokenDetailsService class.
- *
+ * @see OAuthTokenDetailsService
  * @author Andrei Bucin <andrei.bucin@fortech.ro>
  */
 @RoxableTestClass(tags = {"oAuthToken"})

@@ -28,8 +28,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for GrantTypeCheckFilter class.
- *
+ * @see GrantTypeCheckFilter
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"grantTypeCheckFilter"})

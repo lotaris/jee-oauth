@@ -23,8 +23,7 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for TokenBearerAuthenticationFilter class.
- *
+ * @see TokenBearerAuthenticationFilter
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"tokenBearerAuthenticationFilter"})
@@ -62,8 +61,6 @@ public class TokenBearerAuthenticationFilterTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		SecurityContextHolder.setContext(securityContext);
-
-		
 	}
 
 	@Test
@@ -122,13 +119,9 @@ public class TokenBearerAuthenticationFilterTest {
 		}
 	}
 	
-	/**
-	 * Test of doFilter method where authentication is not required because user is already authenticated.
-	 * @throws java.lang.Exception
-	 */
 	@Test
 	@RoxableTest(key = "8f96f3062956")
-	public void doFilterWhereAuthenticationIsNotRequired() throws Exception {
+	public void doFilterWhereUserIsAlreadyAuthenticated() throws Exception {
 		when(securityContext.getAuthentication()).thenReturn(authentication);
 		when(request.getHeader(AUTHORIZATION_HEADER)).thenReturn(SECOND_VALID_AUTHORIZATION_HEADER);
 		try {

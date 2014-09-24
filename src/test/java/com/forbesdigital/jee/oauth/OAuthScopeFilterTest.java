@@ -22,8 +22,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for OAuthScopeFilter class.
- *
+ * @see OAuthScopeFilter
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"oAuthScopeFilter"})

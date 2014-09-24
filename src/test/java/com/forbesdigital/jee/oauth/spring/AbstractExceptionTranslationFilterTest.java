@@ -17,8 +17,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doThrow;
 
 /**
- * Test suite for AbstractExceptionTranslationFilter class.
- * 
+ * @see AbstractExceptionTranslationFilter
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"abstractExceptionTranslationFilter"})

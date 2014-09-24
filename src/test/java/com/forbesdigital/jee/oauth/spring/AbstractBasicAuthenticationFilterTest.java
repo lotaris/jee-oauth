@@ -22,8 +22,7 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for AbstractBasicAuthenticationFilter class.
- *
+ * @see AbstractBasicAuthenticationFilter
  * @author Adrian Ungureanu <adrian.ungureanu@fortech.ro>
  */
 @RoxableTestClass(tags = {"abstractBasicAuthenticationFilter"})

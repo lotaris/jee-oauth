@@ -14,8 +14,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 /**
- * Test suite for the DateHelper class.
- *
+ * @see DateHelper
  * @author Andrei Bucin <andrei.bucin@fortech.ro>
  */
 @RoxableTestClass(tags = {"dateHelper"})
