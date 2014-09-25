@@ -1,4 +1,4 @@
-#Define OAuth entities
+# Define OAuth entities
 
 Based on the defined OAuth configuration, in this step you should define what OAuth entities you want to use in your application. The solution for the storage of the entities is left to you to decide (hardoced, in memory, in DB, ...). 
 
@@ -19,7 +19,6 @@ public class Client implements IOAuthClient {
 Or they can be put in a separate entity, lets say `OAUthClientCredentials` and the Client entity can have a list of such credentials entities. This will be usefull in case you want to so some versioning on your clients.
 
 ```java
-
 public class OAuthCredentials {
 	private String clientId;
 	private String clientSecret;
@@ -30,7 +29,7 @@ public class Client implements IOAuthClient {
 }
 ```
 
-The Client entity can have other properties, like `name` , `description`, whatever your application business requires.
+The Client entity can have other properties, like `name` and `description`, whatever your application business requires.
 
 ## Define User entity - optional
 

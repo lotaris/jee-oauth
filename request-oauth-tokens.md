@@ -1,4 +1,4 @@
-#Request OAuth tokens
+# Request OAuth tokens
 
 In this step you need to implement an endpoint for requesting Oauth Tokens. You will also need to implement some classes required for Client and User Authentication and to configure in Spring Security the filters for this endpoint.
 
