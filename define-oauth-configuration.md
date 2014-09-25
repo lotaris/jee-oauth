@@ -26,7 +26,6 @@ The selected list of grant types need to be returned as set of [EOAuthGrantType]
 
 Define the complete list of OAuth scopes that you want to use in your application. A scope is used to grant access to a certain set of resources on your application. These can be a set of string constants put in a separate class.
 
-Example:
 ```java
 public static final class Scopes {
 	
@@ -75,7 +74,6 @@ And return the set in the method `getAllScopes()`.
 ```
 At this step you can also configure the allowed scopes for each grant type and to return them in the `getAllowedScopes(EOAuthGrantType grantType)` method.
 
-Example:
 ```java
 		// define allowed scopes per grant type
 		scopesPerGrantType = new TreeMap<>();
@@ -111,7 +109,6 @@ Define first the names for OAuth client role that you want to use in you applica
 
 For each client role create a class which implements [IOAuthClientRole][IOAuthClientRole] and configure the name, the allowed scopes and grant types and the default token lifetime.
 
-Example:
 ```java
 private static final class RoleSecure implements IOAuthClientRole {
 	
@@ -152,7 +149,6 @@ private static final class RoleSecure implements IOAuthClientRole {
 
 Then implement the `getClientRoleNames()` method to return the full set of client role names and `getClientRole(String name)` method to return a Client Role by its name.
 
-Example:
 ```java
 		// define the client roles
 		clientRoles = new TreeMap<>();
@@ -195,7 +191,6 @@ public class OAuthListener extends AbstractOAuthConfigurationListener {
 
 Now you should be able to access the Oauth configuration everywhere in you application by using the [OAuthContext][OAuthContext] class.
 
-Example:
 ```java
 	OAuthContext.getConfig().getAllGrantTypes()
 	OAuthContext.getConfig().getAllScopes()
