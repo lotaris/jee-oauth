@@ -13,7 +13,6 @@ A client also needs to have one or more sets of OAuth credentials (client_id & c
 public class Client implements IOAuthClient {
 	private String clientId;
 	private String clientSecret;
-...
 }	
 ```
 
@@ -24,13 +23,11 @@ Or they can be put in a separate entity, lets say `OAUthClientCredentials` and t
 public class OAuthCredentials {
 	private String clientId;
 	private String clientSecret;
-...
 }
 
 public class Client implements IOAuthClient {
 	private List<OAuthCredentials> oAuthCredentials;
-...
-}	
+}
 ```
 
 The Client entity can have other properties, like `name` , `description`, whatever your application business requires.
