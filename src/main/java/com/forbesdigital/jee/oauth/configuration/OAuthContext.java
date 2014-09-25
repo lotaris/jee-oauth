@@ -26,6 +26,13 @@ public class OAuthContext {
 	}
 	
 	/**
+	 * Unregister the OAuth configuration for this application. This method is internally invoked by the OAuth library
+	 */
+	static void unregisterConfiguration(){
+		configuration = null;
+	}
+	
+	/**
 	 * @return The global OAuth configuration for this application
 	 * @see IOAuthConfiguration
 	 */
