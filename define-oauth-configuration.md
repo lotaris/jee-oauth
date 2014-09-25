@@ -90,9 +90,9 @@ Example:
 		passwordGrantTypeScopes.add(AUTHENTICATED_ACCESS);
 		passwordGrantTypeScopes.add(TRUSTED_ACCESS);
 		scopesPerGrantType.put(EOAuthGrantType.RESOURCE_OWNER_PASSWORD_CREDENTIALS, passwordGrantTypeScopes);
+```
 
-...
-
+```java
 	@Override
 	public Set<String> getAllowedScopes(EOAuthGrantType grantType) {
 		return scopesPerGrantType.get(grantType);
@@ -159,9 +159,9 @@ Example:
 		clientRoles.put(UNSECURE_CLIENT_ROLE, new RoleInsecure());
 		clientRoles.put(SECURE_CLIENT_ROLE, new RoleSecure());
 		clientRoles.put(TRUSTED_CLIENT_ROLE, new RoleTrusted());
+```
 
-...
-
+```java
 	@Override
 	public Set<String> getClientRoleNames() {
 		return clientRoles.keySet();
@@ -201,7 +201,6 @@ Example:
 	OAuthContext.getConfig().getAllScopes()
 	OAuthContext.getConfig().getAllowedScopes(grantType)
 	OAuthContext.getConfig().getClientRole(clientRole)
-	...
 ```
 
 
