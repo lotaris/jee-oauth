@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 import javax.ws.rs.core.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -52,7 +53,7 @@ public class AbstractAccessTokenResourceTest {
 	private static final String INVALID_SCOPE = "invalidScope";
 
 	private static final String DATE = "2015-08-23T08:11:22Z";
-
+	
 	//</editor-fold>
 	//<editor-fold defaultstate="collapsed" desc="Mocks">
 	@Mock
@@ -70,6 +71,8 @@ public class AbstractAccessTokenResourceTest {
 	private AbstractAccessTokenImpl abstractAccessTokenResource;
 	//</editor-fold>
 
+	private static  Calendar expirationDate;
+	
 	@Before
 	public void setUp() {
 
@@ -85,6 +88,10 @@ public class AbstractAccessTokenResourceTest {
 		all_client_scopes.add("advanced_client_scope");
 		all_client_scopes.add("basic_client_scope");
 
+		expirationDate = Calendar.getInstance();
+		expirationDate.setTimeZone(TimeZone.getTimeZone("UTC"));
+		expirationDate.set(2015, 7, 23, 8, 11, 22);
+		
 		MockitoAnnotations.initMocks(this);
 		ConfigurationUtils.registerConfiguration(configuration);
 		when(client.getClientRole()).thenReturn(CLIENT_ROLE);
@@ -109,8 +116,7 @@ public class AbstractAccessTokenResourceTest {
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
+
 		when(token.getScopes()).thenReturn(client_scopes);
 		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
 		when(token.getTokenType()).thenReturn(MOCK_TOKEN_TYPE);
@@ -177,9 +183,6 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "e98bb1ab4248")
 	public void tokenRequestWithNullScope() {
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
-
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
@@ -204,9 +207,6 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "eccf42766784")
 	public void tokenRequestWithScopeWhichContainsDoubleSpaces() {
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
-
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
@@ -233,9 +233,6 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "ed89053f4420")
 	public void tokenRequestWithNullClientTokenLifetimeAndNullExpiresIn() {
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
-
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
@@ -273,9 +270,6 @@ public class AbstractAccessTokenResourceTest {
 	@Test
 	@RoxableTest(key = "7bc868e26429")
 	public void tokenRequestWithNegativeExpiresIn() {
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
-
 		Response result = abstractAccessTokenResource.requestToken(GRANT_TYPE, null, USERNAME, PASSWORD, EXPIRES_IN_NEGATIVE);
 		OAuthTokenError response = (OAuthTokenError) result.getEntity();
 
@@ -290,8 +284,6 @@ public class AbstractAccessTokenResourceTest {
 		Set<String> client_scopes = new HashSet<>();
 		client_scopes.add("trusted_client_scope");
 		client_scopes.add("basic_client_scope");
-		Calendar expirationDate = Calendar.getInstance();
-		expirationDate.set(2015, 7, 23, 11, 11, 22);
 
 		when(token.getScopes()).thenReturn(client_scopes);
 		when(token.getAccessToken()).thenReturn(MOCK_ACCESS_TOKEN);
