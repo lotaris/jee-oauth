@@ -129,7 +129,9 @@ Then configure the required filters for your API calls where you want to use Tok
 ```
 
 [Next step](enforce-scopes.md)
+
 [Previous step](request-tokens.md)
+
 [Back to parent](../README.md)
 
 

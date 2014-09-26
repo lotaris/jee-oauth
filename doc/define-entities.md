@@ -40,7 +40,9 @@ A User entity is required only if you want to use the `password` grant type. In 
 The Token entity will be used to store information about an OAuth Token generated for a Client. It has to implement the [IOAuthToken][IOAuthToken] interface and to provide implementation for `getAccessToken()`, `getTokenType()`, `getExpiresIn()`, `getExpirationDate()` and `getScopes()` methods.  
 
 [Next step](request-tokens.md)
+
 [Previous step](define-configuration.md)
+
 [Back to parent](../README.md)
 
 
