@@ -68,6 +68,10 @@ public class SpringTokenExceptionTranslationFilter extends AbstractExceptionTran
 In `spring-security.xml` file configure the beans for the filters used for Token Authorization.
 
 ```xml
+<beans:bean id="tokenService" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<beans:property name="jndiName" value="java:comp/env/ejb/SpringTokenService"/>
+	<beans:property name="expectedType" value="<your_pachage_here>.ISpringTokenService"/>
+</beans:bean>	
 <!--
 	TOKEN START
 -->
@@ -105,11 +109,17 @@ In `spring-security.xml` file configure the beans for the filters used for Token
 <!--
 	TOKEN END
 -->
+```
 
-<beans:bean id="tokenService" class="org.springframework.jndi.JndiObjectFactoryBean">
-	<beans:property name="jndiName" value="java:comp/env/ejb/SpringTokenService"/>
-	<beans:property name="expectedType" value="<your_pachage_here>.ISpringTokenService"/>
-</beans:bean>	
+For the first bean to work you need to also add the following to your `web.xml` file:
+
+```xml
+<ejb-local-ref>
+	<ejb-ref-name>ejb/SpringTokenService</ejb-ref-name>
+	<ejb-ref-type>Session</ejb-ref-type>
+	<local>com.lotaris.dcc.infra.security.token.ISpringTokenService</local>
+	<ejb-link>SpringTokenService</ejb-link>
+</ejb-local-ref>
 ```
 
 Then configure the required filters for your API calls where you want to use Token Authorization

@@ -156,6 +156,15 @@ public class SpringUserService implements ISpringPlatformUserService {
 In `spring-security.xml` file configure the beans for the filters used for Client and for User Authorization.
 
 ```xml
+<beans:bean id="platformUserService" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<beans:property name="jndiName" value="java:comp/env/ejb/SpringPlatformUserService"/>
+	<beans:property name="expectedType" value="<your_pachage_here>.ISpringPlatformUserService"/>
+</beans:bean>
+
+<beans:bean id="clientService" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<beans:property name="jndiName" value="java:comp/env/ejb/SpringClientService"/>
+	<beans:property name="expectedType" value="<your_pachage_here>.ISpringClientService"/>
+</beans:bean>	
 <!--
 	USER START
 -->
@@ -241,16 +250,23 @@ In `spring-security.xml` file configure the beans for the filters used for Clien
 <!--
 	CLIENT END
 -->
+```
 
-<beans:bean id="platformUserService" class="org.springframework.jndi.JndiObjectFactoryBean">
-	<beans:property name="jndiName" value="java:comp/env/ejb/SpringPlatformUserService"/>
-	<beans:property name="expectedType" value="<your_pachage_here>.ISpringPlatformUserService"/>
-</beans:bean>
+For the first two beans to work you need to also add the following to your `web.xml` file:
 
-<beans:bean id="clientService" class="org.springframework.jndi.JndiObjectFactoryBean">
-	<beans:property name="jndiName" value="java:comp/env/ejb/SpringClientService"/>
-	<beans:property name="expectedType" value="<your_pachage_here>.ISpringClientService"/>
-</beans:bean>	
+```xml
+<ejb-local-ref>
+	<ejb-ref-name>ejb/SpringPlatformUserService</ejb-ref-name>
+	<ejb-ref-type>Session</ejb-ref-type>
+	<local>com.lotaris.dcc.infra.security.basic.ISpringPlatformUserService</local>
+	<ejb-link>SpringPlatformUserService</ejb-link>
+</ejb-local-ref>
+<ejb-local-ref>
+	<ejb-ref-name>ejb/SpringClientService</ejb-ref-name>
+	<ejb-ref-type>Session</ejb-ref-type>
+	<local>com.lotaris.dcc.infra.security.basic.ISpringClientService</local>
+	<ejb-link>SpringClientService</ejb-link>
+</ejb-local-ref>
 ```
 
 Then configure the required filters for the request token endpoint
