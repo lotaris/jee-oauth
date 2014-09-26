@@ -1,4 +1,4 @@
-# enforce-oauth-scopes
+# Enforce OAuth Scopes
 
 The last step is to configure the required scopes for all your API calls and to enable scopes validation when an endpoint is accessed.
 
@@ -6,15 +6,15 @@ The last step is to configure the required scopes for all your API calls and to 
 
 The library provides two annotations which should be used to configure the scopes required for each API call. These annotations are: [AllOAuthScopes][AllOAuthScopes] and [AnyOAuthScopes][AnyOAuthScopes].
 
-[AllOAuthScopes][AllOAuthScopes] should be used when you want to secify that a Token should have granted all the scopes from the specified list.
+[AllOAuthScopes][AllOAuthScopes] should be used when you want to specify that a Token should have granted all the scopes from the specified list, in order to get access to the API call.
 
-[AnyOAuthScopes][AnyOAuthScopes] should be used when you want to secify that a Token should have granted at least one of the scopes from the specified list.
+[AnyOAuthScopes][AnyOAuthScopes] should be used when you want to specify that a Token should have granted at least one of the scopes from the specified list, in order to get access to the API call.
 
 ## Annotate API calls
 
 The annotations can be used in the following way:
 
-When one scope is required for an api call:
+When one scope is required for an API call:
 
 ```java
 	@GET
@@ -23,19 +23,19 @@ When one scope is required for an api call:
 	public Response retrievePrices(
 ```
 
-When two scopea are required for an api call:
+When two scopes are required for an API call:
 
 ```java
 	@AllOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
 ```
 
-When one of two scopea is required for an api call:
+When one of two scopes is required for an API call:
 
 ```java
 	@AnyOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
 ```
 
-When no scope is required for an api call (public access):
+When no scope is required for an API call (public access):
 
 ```java
 	@AllOAuthScopes({})
@@ -43,7 +43,7 @@ When no scope is required for an api call (public access):
 
 ## Enable scopes validation 
 
-In order to enable scopes validation for your API calls you need to register [OAuthScopeDynamicFeature][OAuthScopeDynamicFeature] provider in your rest application.
+In order to enable scopes validation for your API calls you need to register [OAuthScopeDynamicFeature][OAuthScopeDynamicFeature] provider in your REST application.
 
 ```java
 import javax.ws.rs.core.Application;

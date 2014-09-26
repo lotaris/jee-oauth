@@ -7,7 +7,7 @@ In this step you need to implement an endpoint for requesting Oauth Tokens. You 
 First step will be to create a Resource class which extends [AbstractAccessTokenResource][AbstractAccessTokenResource], to override `requestToken` method and to add the required annotations depending on what REST framework you want to use. For Jersey such a resource would look like this:
 
 ```java
-@Path(RestPaths.API_OAUTH_TOKEN)
+@Path("oauth/token")
 @Stateless
 public class AccessTokenResource extends AbstractAccessTokenResource<Client, PlatformUser, OAuthToken>{
 
@@ -43,14 +43,14 @@ Next step will be to implement all the abstract methods from [AbstractAccessToke
 	}
 ```
 
-When using `Spring Security`, the `client_id` of the authenticated client can be obtained from using `SecurityContextHolder`:
+When using `Spring Security`, the `client_id` of the authenticated client can be obtained using `SecurityContextHolder`:
 
 ```java
-		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		if (authentication != null) {
-			String clientId = authentication.getName();
-		}
+	if (authentication != null) {
+		String clientId = authentication.getName();
+	}
 ```
 
 Another method which is not abstract, but which needs to be overriden in case `password` grant type is used, is `getOAuthUser(String username)`.
@@ -87,7 +87,7 @@ You can also override the rest of the protected methods from the abstract class 
 	}
 ```
 
-You can override even the way successfull and error responses are built.
+You can override even the way successful and error responses are built.
 
 ```java
 	@Override
@@ -103,9 +103,9 @@ You can override even the way successfull and error responses are built.
 
 ## Spring Security Services
 
-In this step you have to implement some services which will be used by Spring Security in authorization of OAuth Token requests.
+In this step you have to implement some services which will be used by Spring Security for authorization of OAuth Token requests.
 
-One of the services will be used to build a [OAuthClientDetails][OAuthClientDetails] with information about the client doing the request, based on the `client_id` sent in the Authorization header.
+One of the services will be used to build an [OAuthClientDetails][OAuthClientDetails] with information about the client doing the request, based on the `client_id` sent in the Authorization header.
 
 For this you need to extend [IOAuthClientDetailsBuilder][IOAuthClientDetailsBuilder] interface to add the `Local` annotation and then to implement the new interface in a service.
 
@@ -121,11 +121,11 @@ public class SpringClientService implements ISpringClientService {
 	@Override
 	public OAuthClientDetails buildClientDetails(String clientId) {
 		// get the Client entity by clientId
-		// build and return a OAuthClientDetails instance with the Client information required for authentication
+		// build and return an OAuthClientDetails instance with the Client information required for authentication
 	}
 }
 ```
-In case `password` grant type is used, a second service is needed to build a [OAuthUserDetails][OAuthUserDetails] with information about the User doing the request, based on the `username` sent in the request parameters.
+In case `password` grant type is used, a second service is needed to build an [OAuthUserDetails][OAuthUserDetails] with information about the User doing the request, based on the `username` sent in the request parameters.
 
 For this you need to extend [IOAuthUserDetailsBuilder][IOAuthUserDetailsBuilder] interface to add the `Local` annotation and then to implement the new interface in a service.
 
@@ -141,7 +141,7 @@ public class SpringUserService implements ISpringPlatformUserService {
 	@Override
 	public OAuthUserDetails buildUserDetails(String username) {
 		// get the User entity by username
-		// build and return a OAuthUserDetails instance with the User information required for authentication
+		// build and return an OAuthUserDetails instance with the User information required for authentication
 	}
 }
 ```
@@ -236,6 +236,16 @@ In `spring-security.xml` file configure the beans for the filters used for Clien
 	<!--
 		CLIENT END
 	-->
+
+	<beans:bean id="platformUserService" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/ejb/SpringPlatformUserService"/>
+		<beans:property name="expectedType" value="<your_pachage_here>.ISpringPlatformUserService"/>
+	</beans:bean>
+
+	<beans:bean id="clientService" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/ejb/SpringClientService"/>
+		<beans:property name="expectedType" value="<your_pachage_here>.ISpringClientService"/>
+	</beans:bean>	
 ```
 
 Then configure the required filters for the request token endpoint

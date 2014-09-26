@@ -1,13 +1,13 @@
 # Use OAuth tokens
 
-The OAuth tokens will be sent in the request in `Authorization` in the follwing format `Authorization: Bearer <an_oauth_token>` 
+The OAuth tokens will be sent in the request in `Authorization` header in the follwing format `Authorization: Bearer <your_oauth_token>` 
 In this step you need to implement the classes required for Authorization with OAuth tokens and to configure in Spring Security the required filters for all your endpoints.
 
 ## Spring Security Service
 
 First you have to implement a service which will be used by Spring Security in authorization of the API calls requests.
 
-This service will be used to build a [OAuthTokenDetails][OAuthTokenDetails] with information about the Token used in the request, based on the token value sent in the `Authorization` header.
+This service will be used to build an [OAuthTokenDetails][OAuthTokenDetails] with information about the Token used in the request, based on the token value sent in the `Authorization` header.
 
 For this you need to extend [IOAuthTokenDetailsBuilder][IOAuthTokenDetailsBuilder] interface to add the `Local` annotation and then to implement the new interface in a service.
 
@@ -23,14 +23,14 @@ public class SpringTokenService implements ISpringTokenService {
 	@Override
 	public OAuthTokenDetails buildTokenDetails(String accessToken) {
 		// get the Token entity by accessToken
-		// build and return a OAuthTokenDetails instance with the OAuth Token information required for authentication
+		// build and return an OAuthTokenDetails instance with the OAuth Token information required for authentication
 	}
 }
 ```
 
-## Authorization rrror handling
+## Authorization error handling
 
-In order to catch the authentication execeptions and to return the error response in a desired format, you need to extend [AbstractExceptionTranslationFilter][AbstractExceptionTranslationFilter] and to override the `handleSpringSecurityException(...)` method.
+In order to catch the authentication exceptions and to return the error response in a desired format, you need to extend [AbstractExceptionTranslationFilter][AbstractExceptionTranslationFilter] and to override the `handleSpringSecurityException(...)` method.
 
 ```java
 public class SpringTokenExceptionTranslationFilter extends AbstractExceptionTranslationFilter {
@@ -103,12 +103,17 @@ In `spring-security.xml` file configure the beans for the filters used for Token
 	<!--
 		TOKEN END
 	-->
+
+	<beans:bean id="tokenService" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/ejb/SpringTokenService"/>
+		<beans:property name="expectedType" value="<your_pachage_here>.ISpringTokenService"/>
+	</beans:bean>	
 ```
 
 Then configure the required filters for your API calls where you want to use Token Authorization
 
 ```xml
-			<security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
+	<security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
 ```
 
 
