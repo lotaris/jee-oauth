@@ -21,10 +21,11 @@ public class AccessTokenResource extends AbstractAccessTokenResource<Client, Pla
 			@FormParam("scope") String scope,
 			@FormParam("username") String username,
 			@FormParam("password") String password,
-			@FormParam("expires_in") String expiresIn){
+			@FormParam("expires_in") String expiresIn) {
 
 		return super.requestToken(grantType, scope, username, password, expiresIn);
 	}
+}
 ``` 
 
 ## Implement abstract methods
@@ -111,7 +112,9 @@ For this you need to extend [IOAuthClientDetailsBuilder][IOAuthClientDetailsBuil
 
 ```java
 @Local
-public interface ISpringClientService extends IOAuthClientDetailsBuilder{}
+public interface ISpringClientService extends IOAuthClientDetailsBuilder {
+	// Add other methods that you want to expose in this EJB 
+}
 ```
 
 ```java
@@ -131,7 +134,9 @@ For this you need to extend [IOAuthUserDetailsBuilder][IOAuthUserDetailsBuilder]
 
 ```java
 @Local
-public interface ISpringUserService extends IOAuthUserDetailsBuilder{}
+public interface ISpringUserService extends IOAuthUserDetailsBuilder {
+	// Add other methods that you want to expose in this EJB 
+}
 ```
 
 ```java
@@ -253,9 +258,10 @@ Then configure the required filters for the request token endpoint
 ```xml
 <beans:bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
 	<security:filter-chain-map request-matcher="regex">
+		<!-- Other patterns here - Please note that the resolution of the patterns is done top -> down -->
 		<security:filter-chain pattern="/api/oauth/token.*" filters="securityContextFilter, clientExceptionTranslatorFilter, clientAuthenticationFilter, grantTypeCheckFilter, passwordGrantTypeUserAuthenticationFilter, clientFilterSecurityInterceptor" />
 		<!-- Other patterns here -->
-	</security:filter-chain-map>
+	</security:filter-chain-map>s
 </beans:bean>
 ```
 

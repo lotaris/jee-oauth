@@ -13,7 +13,9 @@ For this you need to extend [IOAuthTokenDetailsBuilder][IOAuthTokenDetailsBuilde
 
 ```java
 @Local
-public interface ISpringTokenService extends IOAuthTokenDetailsBuilder{}
+public interface ISpringTokenService extends IOAuthTokenDetailsBuilder{
+	// Add other methods that you want to expose in this EJB 
+}
 ```
 
 ```java
