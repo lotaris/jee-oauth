@@ -154,8 +154,6 @@ In `spring-security.xml` file configure the beans for the filters used for Clien
 	<!--
 		USER START
 	-->
-	<beans:bean id="platformUserExceptionTranslatorFilter" class="com.lotaris.dcc.infra.security.basic.PlatformUserExceptionTranslationFilter" />	
-	
 	<beans:bean id="platformUserFilterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<beans:property name="securityMetadataSource">
 			<security:filter-security-metadata-source>
