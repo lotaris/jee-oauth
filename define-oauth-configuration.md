@@ -7,19 +7,19 @@ In this step you need to define the OAuth behaviour of your application, more ex
 Choose from the grant types offered by the library which ones do you want to use in your application. The grant types supported by the OAuth library can be found in [EOAuthGrantType][EOAuthGrantType] enum.
 
 ```java
-	// define list of supported grant types
-	grantTypes = new TreeSet<>();
-	grantTypes.add(EOAuthGrantType.CLIENT_CREDENTIALS);
-	grantTypes.add(EOAuthGrantType.RESOURCE_OWNER_PASSWORD_CREDENTIALS);
+// define list of supported grant types
+grantTypes = new TreeSet<>();
+grantTypes.add(EOAuthGrantType.CLIENT_CREDENTIALS);
+grantTypes.add(EOAuthGrantType.RESOURCE_OWNER_PASSWORD_CREDENTIALS);
 ```
 
 The selected list of grant types need to be returned as set of [EOAuthGrantType][EOAuthGrantType] in the method `getAllGrantTypes()`.
 
 ```java
-	@Override
-	public Set<EOAuthGrantType> getAllGrantTypes() {
-		return grantTypes;
-	}
+@Override
+public Set<EOAuthGrantType> getAllGrantTypes() {
+	return grantTypes;
+}
 ```
 
 ## Define OAuth scopes
@@ -57,46 +57,46 @@ public static final class Scopes {
 Then create a set with the allowed scopes:
 
 ```java
-	// define allowed scopes
-	scopes = new TreeSet<>();
-	scopes.add(BASIC_ACCESS);
-	scopes.add(ADVANCED_ACCESS);
-	scopes.add(AUTHENTICATED_ACCESS);
-	scopes.add(TRUSTED_ACCESS);
+// define allowed scopes
+scopes = new TreeSet<>();
+scopes.add(BASIC_ACCESS);
+scopes.add(ADVANCED_ACCESS);
+scopes.add(AUTHENTICATED_ACCESS);
+scopes.add(TRUSTED_ACCESS);
 ```
 And return the set in the method `getAllScopes()`.
 
 ```java
-	@Override
-	public Set<String> getAllScopes() {
-		return scopes;
-	}
+@Override
+public Set<String> getAllScopes() {
+	return scopes;
+}
 ```
 At this step you can also configure the allowed scopes for each grant type and to return them in the `getAllowedScopes(EOAuthGrantType grantType)` method.
 
 ```java
-	// define allowed scopes per grant type
-	scopesPerGrantType = new TreeMap<>();
+// define allowed scopes per grant type
+scopesPerGrantType = new TreeMap<>();
 
-	Set<String> clientCredentialsGrantTypeScopes = new TreeSet<>();
-	clientCredentialsGrantTypeScopes.add(BASIC_ACCESS);
-	clientCredentialsGrantTypeScopes.add(ADVANCED_ACCESS);
-	clientCredentialsGrantTypeScopes.add(TRUSTED_ACCESS);
-	scopesPerGrantType.put(EOAuthGrantType.CLIENT_CREDENTIALS, clientCredentialsGrantTypeScopes);
+Set<String> clientCredentialsGrantTypeScopes = new TreeSet<>();
+clientCredentialsGrantTypeScopes.add(BASIC_ACCESS);
+clientCredentialsGrantTypeScopes.add(ADVANCED_ACCESS);
+clientCredentialsGrantTypeScopes.add(TRUSTED_ACCESS);
+scopesPerGrantType.put(EOAuthGrantType.CLIENT_CREDENTIALS, clientCredentialsGrantTypeScopes);
 
-	Set<String> passwordGrantTypeScopes = new TreeSet<>();
-	passwordGrantTypeScopes.add(BASIC_ACCESS);
-	passwordGrantTypeScopes.add(ADVANCED_ACCESS);
-	passwordGrantTypeScopes.add(AUTHENTICATED_ACCESS);
-	passwordGrantTypeScopes.add(TRUSTED_ACCESS);
-	scopesPerGrantType.put(EOAuthGrantType.RESOURCE_OWNER_PASSWORD_CREDENTIALS, passwordGrantTypeScopes);
+Set<String> passwordGrantTypeScopes = new TreeSet<>();
+passwordGrantTypeScopes.add(BASIC_ACCESS);
+passwordGrantTypeScopes.add(ADVANCED_ACCESS);
+passwordGrantTypeScopes.add(AUTHENTICATED_ACCESS);
+passwordGrantTypeScopes.add(TRUSTED_ACCESS);
+scopesPerGrantType.put(EOAuthGrantType.RESOURCE_OWNER_PASSWORD_CREDENTIALS, passwordGrantTypeScopes);
 ```
 
 ```java
-	@Override
-	public Set<String> getAllowedScopes(EOAuthGrantType grantType) {
-		return scopesPerGrantType.get(grantType);
-	}
+@Override
+public Set<String> getAllowedScopes(EOAuthGrantType grantType) {
+	return scopesPerGrantType.get(grantType);
+}
 ```
 
 ## Define OAuth client roles
@@ -104,9 +104,9 @@ At this step you can also configure the allowed scopes for each grant type and t
 Define first the names for OAuth client roles that you want to use in you application. This can be a set of String constants.
 
 ```java
-	public static final String UNSECURE_CLIENT_ROLE = "UNSECURE_CLIENT";
-	public static final String SECURE_CLIENT_ROLE   = "SECURE_CLIENT";
-	public static final String TRUSTED_CLIENT_ROLE  = "TRUSTED_CLIENT";
+public static final String UNSECURE_CLIENT_ROLE = "UNSECURE_CLIENT";
+public static final String SECURE_CLIENT_ROLE   = "SECURE_CLIENT";
+public static final String TRUSTED_CLIENT_ROLE  = "TRUSTED_CLIENT";
 ```
 
 For each client role create a class which implements [IOAuthClientRole][IOAuthClientRole] and configure the name, the allowed scopes and grant types and the default token lifetime.
@@ -152,23 +152,23 @@ private static final class RoleSecure implements IOAuthClientRole {
 Then implement the `getClientRoleNames()` method to return the full set of client role names and `getClientRole(String name)` method to return a Client Role by its name.
 
 ```java
-	// define the client roles
-	clientRoles = new TreeMap<>();
-	clientRoles.put(UNSECURE_CLIENT_ROLE, new RoleInsecure());
-	clientRoles.put(SECURE_CLIENT_ROLE, new RoleSecure());
-	clientRoles.put(TRUSTED_CLIENT_ROLE, new RoleTrusted());
+// define the client roles
+clientRoles = new TreeMap<>();
+clientRoles.put(UNSECURE_CLIENT_ROLE, new RoleInsecure());
+clientRoles.put(SECURE_CLIENT_ROLE, new RoleSecure());
+clientRoles.put(TRUSTED_CLIENT_ROLE, new RoleTrusted());
 ```
 
 ```java
-	@Override
-	public Set<String> getClientRoleNames() {
-		return clientRoles.keySet();
-	}
+@Override
+public Set<String> getClientRoleNames() {
+	return clientRoles.keySet();
+}
 
-	@Override
-	public IOAuthClientRole getClientRole(String name) {
-		return clientRoles.get(name);
-	}		
+@Override
+public IOAuthClientRole getClientRole(String name) {
+	return clientRoles.get(name);
+}		
 ```
 
 ## Register Oauth configuration
@@ -194,10 +194,10 @@ public class OAuthListener extends AbstractOAuthConfigurationListener {
 Now you should be able to access the Oauth configuration everywhere in you application by using the [OAuthContext][OAuthContext] class.
 
 ```java
-	OAuthContext.getConfig().getAllGrantTypes()
-	OAuthContext.getConfig().getAllScopes()
-	OAuthContext.getConfig().getAllowedScopes(grantType)
-	OAuthContext.getConfig().getClientRole(clientRole)
+OAuthContext.getConfig().getAllGrantTypes()
+OAuthContext.getConfig().getAllScopes()
+OAuthContext.getConfig().getAllowedScopes(grantType)
+OAuthContext.getConfig().getClientRole(clientRole)
 ```
 
 

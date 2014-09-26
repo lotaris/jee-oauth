@@ -64,7 +64,7 @@ Next, we present step by step what needs to be done in order to integrate the li
 
 [3. Request OAuth tokens](request-oauth-tokens.md)
 
-[4. Use OAuth tokens](use-oath-tokens.md)
+[4. Use OAuth tokens](use-oauth-tokens.md)
 
 [5. Enforce OAuth scopes](enforce-oauth-scopes.md)
 

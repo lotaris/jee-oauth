@@ -66,54 +66,54 @@ public class SpringTokenExceptionTranslationFilter extends AbstractExceptionTran
 In `spring-security.xml` file configure the beans for the filters used for Token Authorization.
 
 ```xml
-	<!--
-		TOKEN START
-	-->
-	<beans:bean id="tokenExceptionTranslatorFilter" class="<your_pachage_here>.SpringTokenExceptionTranslationFilter" />	
+<!--
+	TOKEN START
+-->
+<beans:bean id="tokenExceptionTranslatorFilter" class="<your_pachage_here>.SpringTokenExceptionTranslationFilter" />	
 
-	<beans:bean id="tokenFilterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
-		<beans:property name="securityMetadataSource">
-			<security:filter-security-metadata-source>
-				<security:intercept-url pattern="/.*" access="ROLE_TEST" />
-			</security:filter-security-metadata-source>
-		</beans:property>
-		<beans:property name="authenticationManager" ref="tokenAuthenticationManager" />
-		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
-	</beans:bean>
+<beans:bean id="tokenFilterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+	<beans:property name="securityMetadataSource">
+		<security:filter-security-metadata-source>
+			<security:intercept-url pattern="/.*" access="ROLE_TEST" />
+		</security:filter-security-metadata-source>
+	</beans:property>
+	<beans:property name="authenticationManager" ref="tokenAuthenticationManager" />
+	<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+</beans:bean>
 
-	<beans:bean id="tokenAuthenticationFilter" class="com.forbesdigital.jee.oauth.spring.token.TokenBearerAuthenticationFilter">
-		<beans:constructor-arg ref="tokenAuthenticationManager" />
-	</beans:bean>
-	
-	<beans:bean id="tokenAuthenticationManager" class="org.springframework.security.authentication.ProviderManager">
-		<beans:property name="providers">
-			<beans:list>
-				<beans:ref bean="tokenAuthenticationProvider" />
-			</beans:list>
-		</beans:property>
-	</beans:bean>
+<beans:bean id="tokenAuthenticationFilter" class="com.forbesdigital.jee.oauth.spring.token.TokenBearerAuthenticationFilter">
+	<beans:constructor-arg ref="tokenAuthenticationManager" />
+</beans:bean>
 
-	<beans:bean id="tokenAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<beans:property name="userDetailsService" ref="tokenDetailsService" />
-	</beans:bean>
+<beans:bean id="tokenAuthenticationManager" class="org.springframework.security.authentication.ProviderManager">
+	<beans:property name="providers">
+		<beans:list>
+			<beans:ref bean="tokenAuthenticationProvider" />
+		</beans:list>
+	</beans:property>
+</beans:bean>
 
-	<beans:bean	id="tokenDetailsService" class="com.forbesdigital.jee.oauth.spring.token.OAuthTokenDetailsService">
-		<beans:property name="tokenDetailsBuilder" ref="tokenService" />
-	</beans:bean>
-	<!--
-		TOKEN END
-	-->
+<beans:bean id="tokenAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+	<beans:property name="userDetailsService" ref="tokenDetailsService" />
+</beans:bean>
 
-	<beans:bean id="tokenService" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<beans:property name="jndiName" value="java:comp/env/ejb/SpringTokenService"/>
-		<beans:property name="expectedType" value="<your_pachage_here>.ISpringTokenService"/>
-	</beans:bean>	
+<beans:bean	id="tokenDetailsService" class="com.forbesdigital.jee.oauth.spring.token.OAuthTokenDetailsService">
+	<beans:property name="tokenDetailsBuilder" ref="tokenService" />
+</beans:bean>
+<!--
+	TOKEN END
+-->
+
+<beans:bean id="tokenService" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<beans:property name="jndiName" value="java:comp/env/ejb/SpringTokenService"/>
+	<beans:property name="expectedType" value="<your_pachage_here>.ISpringTokenService"/>
+</beans:bean>	
 ```
 
 Then configure the required filters for your API calls where you want to use Token Authorization
 
 ```xml
-	<security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
+<security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
 ```
 
 

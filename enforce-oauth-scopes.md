@@ -17,28 +17,28 @@ The annotations can be used in the following way:
 When one scope is required for an API call:
 
 ```java
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@AllOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS})
-	public Response retrievePrices(
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+@AllOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS})
+public Response retrievePrices(
 ```
 
 When two scopes are required for an API call:
 
 ```java
-	@AllOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
+@AllOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
 ```
 
 When one of two scopes is required for an API call:
 
 ```java
-	@AnyOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
+@AnyOAuthScopes({OAuthConfiguration.Scopes.BASIC_ACCESS, OAuthConfiguration.Scopes.ADVANCED_ACCESS})
 ```
 
 When no scope is required for an API call (public access):
 
 ```java
-	@AllOAuthScopes({})
+@AllOAuthScopes({})
 ```
 
 ## Enable scopes validation 
