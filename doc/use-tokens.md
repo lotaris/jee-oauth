@@ -128,7 +128,7 @@ Then configure the required filters for your API calls where you want to use Tok
 <security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
 ```
 
-[Next step](define-configuration.md)
+[Next step](enforce-scopes.md)
 [Previous step](request-tokens.md)
 [Back to parent](../README.md)
 
