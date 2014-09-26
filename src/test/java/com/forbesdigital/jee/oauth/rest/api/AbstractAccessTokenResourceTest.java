@@ -71,7 +71,7 @@ public class AbstractAccessTokenResourceTest {
 	private AbstractAccessTokenImpl abstractAccessTokenResource;
 	//</editor-fold>
 
-	private static  Calendar expirationDate;
+	private  Calendar expirationDate;
 	
 	@Before
 	public void setUp() {
