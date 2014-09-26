@@ -128,6 +128,9 @@ Then configure the required filters for your API calls where you want to use Tok
 <security:filter-chain pattern="/api/.*" filters="securityContextFilter, tokenExceptionTranslatorFilter, tokenAuthenticationFilter, tokenFilterSecurityInterceptor" />
 ```
 
+[Next step](define-configuration.md)
+[Previous step](request-tokens.md)
+[Back to parent](../README.md)
 
 
 [OAuthTokenDetails]: src/main/java/com/forbesdigital/jee/oauth/spring/token/OAuthTokenDetails.java

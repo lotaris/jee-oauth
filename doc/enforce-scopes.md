@@ -60,6 +60,8 @@ public abstract class AbstractRestApplication extends Application {
 
 }
 ```
+[Previous step](enforce-scopes.md)
+[Back to parent](../README.md)
 
 
 [AllOAuthScopes]: src/main/java/com/forbesdigital/jee/oauth/AllOAuthScopes.java

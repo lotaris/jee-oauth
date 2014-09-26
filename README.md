@@ -58,13 +58,12 @@ war.
 Next, we present step by step what needs to be done in order to integrate the library in a new or existing application. Each step is a link to a separate page where the step will be explained in details. These pages will also contain code examples to ease the integration process.
  
 
-[1. Define OAuth configuration](define-oauth-configuration.md)
+[1. Define OAuth configuration](doc/define-configuration.md)
 
-[2. Define OAuth entities](define-oauth-entities.md)
+[2. Define OAuth entities](doc/define-entities.md)
 
-[3. Request OAuth tokens](request-oauth-tokens.md)
+[3. Request OAuth tokens](doc/request-tokens.md)
 
-[4. Use OAuth tokens](use-oauth-tokens.md)
+[4. Use OAuth tokens](doc/use-tokens.md)
 
-[5. Enforce OAuth scopes](enforce-oauth-scopes.md)
-
+[5. Enforce OAuth scopes](doc/enforce-scopes.md)

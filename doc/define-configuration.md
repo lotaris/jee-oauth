@@ -200,6 +200,8 @@ OAuthContext.getConfig().getAllowedScopes(grantType)
 OAuthContext.getConfig().getClientRole(clientRole)
 ```
 
+[Next step](define-entities.md)
+[Back to parent](../README.md)
 
 
 [IOAuthConfiguration]: src/main/java/com/forbesdigital/jee/oauth/configuration/IOAuthConfiguration.java

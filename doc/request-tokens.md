@@ -283,6 +283,9 @@ Then configure the required filters for the request token endpoint
 
 You should be ready to request OAuth tokens at this point.
 
+[Next step](use-tokens.md)
+[Previous step](define-entities.md)
+[Back to parent](../README.md)
 
 
 [AbstractAccessTokenResource]: src/main/java/com/forbesdigital/jee/oauth/rest/api/AbstractAccessTokenResource.java
