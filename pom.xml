@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.forbesdigital.jee</groupId>
-  <artifactId>oauth</artifactId>
-  <name>FD JEE OAuth</name>
-  <version>0.1.1-SNAPSHOT</version>
+  <artifactId>jee-oauth</artifactId>
+  <name>Java EE OAuth</name>
+  <version>0.2.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -182,55 +182,6 @@
 		</profile>		
 	</profiles>
 
-	<distributionManagement>
-		<repository>
-			<id>LotarisReleases</id>
-			<name>Lotaris Release Repository</name>
-			<url>${settings.lotaris.nexus.lotaris.releases.url}</url>
-		</repository>
-		<snapshotRepository>
-			<id>LotarisSnapshots</id>
-			<name>Lotaris Snapshot Repository</name>
-			<url>${settings.lotaris.nexus.lotaris.snapshots.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>LotarisReleases</id>
-			<name>Lotaris Releases Repository</name>
-			<url>${settings.lotaris.nexus.releases.url}</url>
-			<releases/>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>LotarisSnapshots</id>
-			<name>Lotaris Snapshots Repository</name>
-			<url>${settings.lotaris.nexus.snapshots.url}</url>
-			<releases/>
-			<snapshots>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>LotarisReleases</id>
-			<name>Lotaris Repository</name>
-			<url>${settings.lotaris.nexus.releases.url}</url>
-			<releases/>
-		</pluginRepository>
-		<pluginRepository>
-			<id>LotarisSnapshots</id>
-			<name>Lotaris Repository</name>
-			<url>${settings.lotaris.nexus.snapshots.url}</url>
-			<snapshots/>
-		</pluginRepository>
-	</pluginRepositories>
-	
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
